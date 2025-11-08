@@ -1,10 +1,9 @@
-let allProducts = [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 function loadProducts() {
   fetch('products.json')
     .then(res => res.json())
     .then(data => {
-      allProducts = data;
       displayProducts(data);
     });
 }
@@ -27,11 +26,17 @@ function displayProducts(products) {
 }
 
 function addToCart(name, price) {
-  alert(`${name} added to cart for ₦${price}`);
+  cart.push({ name, price });
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
+}
+
+function updateCartCount() {
   const cartCount = document.getElementById("cart-count");
-  cartCount.textContent = parseInt(cartCount.textContent) + 1;
+  cartCount.textContent = cart.length;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   loadProducts();
+  updateCartCount();
 });
