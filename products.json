@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Men's Shirt",
+    "price": 8000,
+    "image": "images/mens-shirt.jpg"
+  },
+  {
+    "name": "Women's Bag",
+    "price": 12000,
+    "image": "images/womens-bag.jpg"
+  },
+  {
+    "name": "Sneakers",
+    "price": 15000,
+    "image": "images/sneakers.jpg"
+  },
+  {
+    "name": "Men's Jacket",
+    "price": 18000,
+    "image": "images/mens-jacket.jpg"
+  }
+]

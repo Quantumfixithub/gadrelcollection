@@ -1,0 +1,10 @@
+How to Add New Products
+Just add new entries to products.json like this:
+
+json
+{
+  "name": "Women's Heels",
+  "price": 10000,
+  "image": "images/womens-heels.jpg"
+}
+Then upload the image to your images/ folder and it will appear automatically on the shop page.

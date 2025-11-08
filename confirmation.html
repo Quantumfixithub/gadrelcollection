@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Confirmation - Gadrel Collection</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Thank You for Your Order!</h1>
+  </header>
+
+  <section>
+    <p>Your payment was successful. Here are your order details:</p>
+    <ul id="order-details"></ul>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Gadrel Collection</p>
+  </footer>
+
+  <script>
+    const order = JSON.parse(localStorage.getItem("lastOrder"));
+    const list = document.getElementById("order-details");
+    if (order) {
+      list.innerHTML = `
+        <li><strong>Name:</strong> ${order.name}</li>
+        <li><strong>Email:</strong> ${order.email}</li>
+        <li><strong>Amount:</strong> ₦${order.amount}</li>
+        <li><strong>Reference:</strong> ${order.reference}</li>
+      `;
+    }
+  </script>
+</body>
+</html>

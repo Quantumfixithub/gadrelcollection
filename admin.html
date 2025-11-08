@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Orders - Gadrel Collection</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Order Dashboard</h1>
+  </header>
+
+  <section>
+    <button onclick="exportOrder()">Export Last Order</button>
+    <pre id="order-output"></pre>
+  </section>
+
+  <script>
+    function exportOrder() {
+      const order = JSON.parse(localStorage.getItem("lastOrder"));
+      const output = document.getElementById("order-output");
+      if (order) {
+        output.textContent = JSON.stringify(order, null, 2);
+      } else {
+        output.textContent = "No order found.";
+      }
+    }
+  </script>
+</body>
+</html>
