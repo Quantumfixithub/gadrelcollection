@@ -26,14 +26,20 @@ function displayProducts(products) {
 }
 
 function addToCart(name, price) {
-  cart.push({ name, price });
+  const existingItem = cart.find(item => item.name === name);
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({ name, price, quantity: 1 });
+  }
   localStorage.setItem("cart", JSON.stringify(cart));
   updateCartCount();
 }
 
 function updateCartCount() {
   const cartCount = document.getElementById("cart-count");
-  cartCount.textContent = cart.length;
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  cartCount.textContent = totalItems;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
