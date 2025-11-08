@@ -1,60 +1,181 @@
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #fff;
-  color: #000;
+@media (max-width: 768px) {
+  nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav a {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+  }
+
+  .product-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .product {
+    width: 90%;
+    max-width: 300px;
+  }
+
+  .hero img {
+    height: auto;
+    width: 100%;
+  }
+
+  .checkout-form {
+    padding: 1rem;
+  }
+
+  input, select, button {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
 }
 
-header, footer {
+/* Sale tag styling */
+.sale-tag {
+  display: inline-block;
+  background: red;
+  color: white;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  border-radius: 4px;
+}
+
+/* Checkout form layout */
+.checkout-form {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.checkout-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.checkout-form input {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.checkout-form button {
+  background: black;
+  color: white;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Confirmation page */
+#order-details {
+  list-style: none;
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+#order-details li {
+  margin-bottom: 0.5rem;
+}
+
+/* Admin dashboard */
+#order-output {
+  background: #eee;
+  padding: 1rem;
+  margin-top: 1rem;
+  white-space: pre-wrap;
+  font-family: monospace;
+}
+
+.about-section, .contact-section {
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
+}
+
+.about-section ul, .contact-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about-section li, .contact-section li {
+  margin-bottom: 0.5rem;
+}
+
+form {
+  margin-top: 2rem;
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+form input, form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+form button {
+  background: black;
+  color: white;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+header {
   background: #000;
   color: #fff;
-  text-align: center;
   padding: 1rem;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+nav {
+  margin-top: 0.5rem;
 }
 
 nav a {
   margin: 0 1rem;
   color: #fff;
   text-decoration: none;
+  font-weight: bold;
 }
 
-.hero img {
-  width: 100%;
-  height: auto;
-  display: block;
+nav a:hover {
+  text-decoration: underline;
 }
 
-.promo {
-  background: gold;
-  padding: 1rem;
-  text-align: center;
+@media (max-width: 768px) {
+  nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav a {
+    margin: 0.5rem 0;
+  }
 }
 
-.brand-story {
-  padding: 2rem;
-  text-align: center;
-}
-
-.product-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding: 2rem;
-  justify-content: center;
-}
-
-.product {
-  border: 1px solid #ccc;
-  padding: 1rem;
-  width: 200px;
-  text-align: center;
-}
-
-button {
-  background: black;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-}
