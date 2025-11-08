@@ -1,7 +1,9 @@
 function loadCart() {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   const cartItems = document.getElementById("cart-items");
+  const cartSummary = document.getElementById("cart-summary");
   cartItems.innerHTML = "";
+  cartSummary.innerHTML = "";
 
   if (cart.length === 0) {
     cartItems.innerHTML = "<p>Your cart is empty.</p>";
@@ -9,12 +11,16 @@ function loadCart() {
     return;
   }
 
+  let total = 0;
+
   cart.forEach((item, index) => {
+    total += item.price * item.quantity;
+
     const div = document.createElement("div");
     div.className = "cart-item";
     div.innerHTML = `
       <h3>${item.name}</h3>
-      <p>₦${item.price}</p>
+      <p>₦${item.price} x ${item.quantity} = ₦${item.price * item.quantity}</p>
       <label>Quantity:
         <input type="number" min="1" value="${item.quantity}" onchange="updateQuantity(${index}, this.value)" />
       </label>
@@ -24,6 +30,7 @@ function loadCart() {
     cartItems.appendChild(div);
   });
 
+  cartSummary.innerHTML = `<h3>Total: ₦${total}</h3>`;
   updateCartCount();
 }
 
