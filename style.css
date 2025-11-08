@@ -344,4 +344,37 @@ footer .social-icons a:hover {
     font-size: 1rem;
   }
 }
+.checkout-section {
+  max-width: 800px;
+  margin: auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+.cart-item {
+  margin-bottom: 1.5rem;
+}
+
+.cart-item input {
+  width: 60px;
+  padding: 0.4rem;
+  margin-left: 0.5rem;
+}
+
+.cart-item button {
+  background: crimson;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cart-item button:hover {
+  background: darkred;
+}
+
 
