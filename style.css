@@ -294,3 +294,54 @@ form button:hover {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+footer {
+  background: #111;
+  color: #fff;
+  padding: 2rem 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-top: 2rem;
+}
+
+footer p {
+  margin: 0.5rem 0;
+}
+
+footer a {
+  color: #ffe600;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+footer .social-icons {
+  margin-top: 1rem;
+}
+
+footer .social-icons a {
+  margin: 0 0.5rem;
+  font-size: 1.2rem;
+  display: inline-block;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+footer .social-icons a:hover {
+  color: #ffe600;
+}
+
+@media (max-width: 768px) {
+  footer {
+    font-size: 0.85rem;
+    padding: 1.5rem 1rem;
+  }
+
+  footer .social-icons a {
+    font-size: 1rem;
+  }
+}
+
