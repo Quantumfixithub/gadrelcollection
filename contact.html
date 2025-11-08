@@ -9,13 +9,23 @@
 <body>
   <header>
     <h1>Contact Gadrel Collection</h1>
-   <nav>
-    <a href="index.html">Home</a>
-    <a href="shop.html">Shop</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-    <a href="checkout.html">Cart (<span id="cart-count">0</span>)</a>
-  </nav>
+  <nav class="vertical-nav">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li>
+      <a href="#">Shop</a>
+      <ul class="dropdown">
+        <li><a href="mens.html">Men</a></li>
+        <li><a href="womens.html">Women</a></li>
+        <li><a href="accessories.html">Accessories</a></li>
+      </ul>
+    </li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="checkout.html">Cart (<span id="cart-count">0</span>)</a></li>
+  </ul>
+</nav>
+
   </header>
 
   <section class="contact-section">
