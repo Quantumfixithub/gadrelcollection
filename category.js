@@ -1,58 +1,37 @@
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Accessories - Gadrel</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="vertical-nav">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li>
+        <a href="#">Shop</a>
+        <ul class="dropdown">
+          <li><a href="mens.html">Men</a></li>
+          <li><a href="womens.html">Women</a></li>
+          <li><a href="accessories.html">Accessories</a></li>
+        </ul>
+      </li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="checkout.html">Cart (<span id="cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
 
-function getCategoryFromPage() {
-  const path = window.location.pathname;
-  if (path.includes("mens")) return "Men";
-  if (path.includes("womens")) return "Women";
-  if (path.includes("accessories")) return "Accessories";
-  return null;
-}
+  <header>
+    <h1>Accessories</h1>
+  </header>
 
-function loadCategoryProducts() {
-  fetch("products.json")
-    .then(res => res.json())
-    .then(data => {
-      const category = getCategoryFromPage();
-      const filtered = data.filter(p => p.gender === category || p.category === category);
-      displayProducts(filtered);
-    });
-}
+  <section class="product-grid" id="product-list">
+    <!-- Products will be loaded here -->
+  </section>
 
-function displayProducts(products) {
-  const container = document.getElementById("product-list");
-  container.innerHTML = "";
-  products.forEach(product => {
-    const div = document.createElement("div");
-    div.className = "product";
-    div.innerHTML = `
-      <img src="${product.image}" alt="${product.name}" />
-      <h3>${product.name}</h3>
-      <p>₦${product.price}</p>
-      ${product.sale ? '<span class="sale-tag">SALE</span>' : ''}
-      <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
-    `;
-    container.appendChild(div);
-  });
-}
-
-function addToCart(name, price) {
-  const existingItem = cart.find(item => item.name === name);
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    cart.push({ name, price, quantity: 1 });
-  }
-  localStorage.setItem("cart", JSON.stringify(cart));
-  updateCartCount();
-}
-
-function updateCartCount() {
-  const cartCount = document.getElementById("cart-count");
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  cartCount.textContent = totalItems;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  loadCategoryProducts();
-  updateCartCount();
-});
+  <script src="category.js"></script>
+</body>
+</html>
