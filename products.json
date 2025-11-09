@@ -1,38 +1,74 @@
 [
   {
     "id": "mens-shirt",
-    "name": "Men's Shirt",
+    "name": "Casual T-Shirt & Shorts Set",
     "category": "Clothing",
     "gender": "Men",
-    "price": 8000,
-    "image": "https://i5.walmartimages.com/seo/GENTS-BLISS-Long-Sleeve-Mens-Dress-Shirts-Casual-Solid-Shirts-for-Men-Regular-Oxford-Tops-with-Pocket_4fff4355-09b7-4425-8638-1fea32177708.59a395eb56c500a6c61b6bac72f81bcd.jpeg",
-    "sale": false
-  },
-  {
-    "id": "womens-bag",
-    "name": "Women's Bag",
-    "category": "Bags",
-    "gender": "Women",
-    "price": 12000,
-    "image": "https://i5.walmartimages.com/asr/a3075ac0-fbad-4757-bde3-f593b8222583.43162b722ef99c6addcf8c46ca345d80.jpeg",
+    "price": 7695,
+    "image": "https://i.imgur.com/men-shirt.jpg",
     "sale": true
   },
   {
-    "id": "sneakers",
-    "name": "Sneakers",
+    "id": "mens-sneakers",
+    "name": "Board Sneakers (Black)",
     "category": "Footwear",
-    "gender": "Unisex",
-    "price": 15000,
-    "image": "https://staticg.sportskeeda.com/editor/2022/08/0ce54-16607391770831-1920.jpg",
-    "sale": false
+    "gender": "Men",
+    "price": 12939,
+    "image": "https://i.imgur.com/men-sneakers.jpg",
+    "sale": true
   },
   {
-    "id": "mens-jacket",
-    "name": "Men's Jacket",
-    "category": "Clothing",
+    "id": "mens-watch",
+    "name": "Iced Wristwatch & Chain Combo",
+    "category": "Accessories",
     "gender": "Men",
-    "price": 18000,
-    "image": "https://i5.walmartimages.com/asr/2eee434f-89cc-4c7e-9324-849dd8cfa45c.92c508323e1e751c4e5b7ef5080640bd.jpeg",
+    "price": 14790,
+    "image": "https://i.imgur.com/men-watch.jpg",
+    "sale": true
+  },
+  {
+    "id": "womens-bag",
+    "name": "Canvas Shoulder Tote Bag",
+    "category": "Bags",
+    "gender": "Women",
+    "price": 5130,
+    "image": "https://i.imgur.com/women-bag.jpg",
+    "sale": true
+  },
+  {
+    "id": "womens-shoes",
+    "name": "Adidas Galaxy 6 Running Shoes",
+    "category": "Footwear",
+    "gender": "Women",
+    "price": 64615,
+    "image": "https://i.imgur.com/women-shoes.jpg",
+    "sale": true
+  },
+  {
+    "id": "womens-joggers",
+    "name": "Essentials Tapered Joggers",
+    "category": "Clothing",
+    "gender": "Women",
+    "price": 19070,
+    "image": "https://i.imgur.com/women-joggers.jpg",
+    "sale": true
+  },
+  {
+    "id": "accessory-bracelet",
+    "name": "Black Obsidian Wealth Bracelet",
+    "category": "Accessories",
+    "gender": "Unisex",
+    "price": 3500,
+    "image": "https://i.imgur.com/bracelet.jpg",
+    "sale": true
+  },
+  {
+    "id": "accessory-sunglasses",
+    "name": "Sunglasses (Unisex)",
+    "category": "Accessories",
+    "gender": "Unisex",
+    "price": 6000,
+    "image": "https://i.imgur.com/sunglasses.jpg",
     "sale": true
   }
 ]
