@@ -7,50 +7,54 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Navigation -->
   <nav class="top-nav">
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li class="dropdown-parent">
-      <a href="#">Shop</a>
-      <ul class="dropdown">
-        <li><a href="mens.html">Men</a></li>
-        <li><a href="womens.html">Women</a></li>
-        <li><a href="accessories.html">Accessories</a></li>
-      </ul>
-    </li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-    <li><a href="checkout.html">Cart (<span id="cart-count">0</span>)</a></li>
-  </ul>
-</nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li class="dropdown-parent">
+        <a href="#">Shop</a>
+        <ul class="dropdown">
+          <li><a href="mens.html">Men</a></li>
+          <li><a href="womens.html">Women</a></li>
+          <li><a href="accessories.html">Accessories</a></li>
+        </ul>
+      </li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="checkout.html">Cart (<span id="cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
 
-
+  <!-- Header -->
   <header>
     <h1>About Gadrel Collection</h1>
   </header>
 
+  <!-- About Section -->
   <section class="about-section">
-    <h2>Our Story</h2>
-    <p>Gadrel Collection was founded with a vision to redefine fashion for the modern African consumer. We believe style should be accessible, expressive, and empowering — whether you're dressing for work, leisure, or celebration.</p>
+    <h2>✨ Our Story</h2>
+    <p>Born in the heart of Africa, <strong>Gadrel Collection</strong> is more than a fashion brand — it's a movement. We started with a simple idea: to empower individuals through style that speaks boldly and authentically. From local roots to global aspirations, our journey is stitched with passion, creativity, and culture.</p>
 
-    <h2>Our Mission</h2>
-    <p>To deliver high-quality fashion pieces that blend elegance, affordability, and authenticity. We curate collections for men and women that reflect bold individuality and timeless design.</p>
+    <h2>🎯 Our Mission</h2>
+    <p>To craft fashion experiences that blend elegance, affordability, and originality. We design for the dreamers, the doers, and the trendsetters — offering collections that celebrate individuality and elevate everyday wear.</p>
 
-    <h2>Why Choose Us?</h2>
+    <h2>💡 What Sets Us Apart</h2>
     <ul>
-      <li>✅ Original products from trusted brands</li>
-      <li>🚚 Fast nationwide delivery</li>
-      <li>💳 Secure payment via Paystack</li>
-      <li>🔁 Easy returns and customer support</li>
+      <li>🧵 Curated collections from trusted African and global brands</li>
+      <li>🚚 Fast and reliable delivery across Nigeria</li>
+      <li>💳 Seamless checkout with Paystack integration</li>
+      <li>🤝 Hassle-free returns and responsive customer care</li>
+      <li>🌍 A brand that celebrates culture, confidence, and community</li>
     </ul>
   </section>
 
+  <!-- Footer -->
   <footer>
-    <p>&copy; 2025 Gadrel Collection</p>
+    <p>&copy; 2025 Gadrel Collection. Designed to inspire.</p>
   </footer>
 
+  <!-- Cart Count Script -->
   <script>
-    // Update cart count on page load
     document.addEventListener("DOMContentLoaded", () => {
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
       const cartCount = document.getElementById("cart-count");
