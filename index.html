@@ -5,6 +5,90 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gadrel Collection</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: #111;
+      color: #fff;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .hero img {
+      width: 100%;
+      max-width: 1000px;
+      height: auto;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+    }
+
+    .cta {
+      margin-top: 1rem;
+    }
+
+    .cta-button {
+      background-color: #25D366;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #1ebe5d;
+    }
+
+    .brand-story {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: #fff;
+    }
+
+    .brand-story h2 {
+      margin-bottom: 1rem;
+    }
+
+    .site-footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: #111;
+      color: #fff;
+    }
+
+    .footer-links a {
+      color: #25D366;
+      margin: 0 1rem;
+      text-decoration: none;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25D366;
+      color: white;
+      padding: 0.75rem 1rem;
+      border-radius: 50px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 999;
+    }
+  </style>
 </head>
 <body>
   <!-- Top Navigation -->
@@ -28,6 +112,7 @@
   <!-- Page Header -->
   <header>
     <h1>Gadrel Collection</h1>
+    <p>Timeless fashion for every style</p>
   </header>
 
   <!-- Hero Section -->
@@ -39,30 +124,28 @@
     </div>
   </section>
 
-  <!-- Promo Section -->
-  <section class="promo">
-    <h2>🔥 Flash Sale: Up to 30% Off!</h2>
-    <p>Use code <strong>GADREL30</strong> at checkout</p>
-  </section>
-
   <!-- Brand Story -->
   <section class="brand-story">
     <h2>Discover the elegance of Gadrel Collection</h2>
     <p>Affordable luxury for every style. Fashion that speaks for both men and women.</p>
   </section>
 
- <footer class="site-footer">
-  <div class="footer-content">
-    <p>&copy; 2025 Gadrel Collection. All rights reserved.</p>
-    <div class="footer-links">
-      <a href="https://instagram.com/gadrelcollection" target="_blank">Instagram</a>
-           <a href="mailto:support@gadrelcollection.com">Email Us</a>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Gadrel Collection. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="https://instagram.com/gadrelcollection" target="_blank">Instagram</a>
+        <a href="mailto:support@gadrelcollection.com">Email Us</a>
+      </div>
     </div>
-  </div>
-</footer>
-<a href="https://wa.me/2348105429924" class="whatsapp-float" target="_blank" title="Chat with us">
-  🟢 Chat on WhatsApp
-</a>
+  </footer>
+
+  <!-- WhatsApp Chat -->
+  <a href="https://wa.me/2348105429924" class="whatsapp-float" target="_blank" title="Chat with us">
+    🟢 Chat on WhatsApp
+  </a>
+
   <!-- Cart count updater -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -77,6 +160,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
-
-
