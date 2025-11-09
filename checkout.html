@@ -43,6 +43,14 @@
       <button onclick="applyDiscount()">Apply</button>
     </div>
 
+    <div class="shipping-method">
+      <label for="shipping">Choose Shipping:</label>
+      <select id="shipping" onchange="updateShipping()">
+        <option value="standard">Standard (₦0)</option>
+        <option value="express">Express (₦1500)</option>
+      </select>
+    </div>
+
     <p class="delivery-estimate">Estimated Delivery: 2–5 business days</p>
     <p class="loyalty-points">You’ll earn <span id="loyalty-points">0</span> points with this order</p>
 
@@ -56,11 +64,22 @@
       <img src="https://logos-world.net/wp-content/uploads/2020/04/Visa-Logo.png" alt="Visa" />
       <img src="https://logospng.org/wp-content/uploads/mastercard.jpg" alt="Mastercard" />
     </div>
+
+    <div class="trust-badges">
+      <img src="https://www.ssl.com/images/ssl-trust-seal.png" alt="SSL Secure" />
+      <img src="https://www.mcafeesecure.com/images/mcafee_secure_badge.png" alt="McAfee Secure" />
+    </div>
   </section>
 
   <section class="saved-section">
     <h2>Saved for Later</h2>
     <div id="saved-items"></div>
+  </section>
+
+  <section class="order-summary">
+    <h2>Order Summary</h2>
+    <div id="order-preview"></div>
+    <button onclick="printSummary()">Download Summary</button>
   </section>
 
   <footer class="site-footer">
@@ -83,6 +102,7 @@
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     let saved = JSON.parse(localStorage.getItem("saved")) || [];
     let discount = 0;
+    let shippingFee = 0;
 
     function renderCart() {
       const container = document.getElementById("cart-items");
@@ -113,7 +133,8 @@
       });
 
       const discountedTotal = total - total * discount;
-      totalDisplay.textContent = Math.round(discountedTotal);
+      const finalTotal = Math.round(discountedTotal + shippingFee);
+      totalDisplay.textContent = finalTotal;
       cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
 
       const points = Math.floor(discountedTotal / 100);
@@ -196,6 +217,7 @@
         div.innerHTML = `
           <strong>${item.name}</strong>
           <p>₦${item.price} x ${item.quantity}</p>
+          <button onclick="moveToCart(${index})
           <button onclick="moveToCart(${index})">Move to Cart</button>
         `;
         container.appendChild(div);
@@ -222,6 +244,24 @@
         showToast("Invalid discount code");
       }
       renderCart();
+    }
+
+    function updateShipping() {
+      const method = document.getElementById("shipping").value;
+      shippingFee = method === "express" ? 1500 : 0;
+      renderCart();
+    }
+
+    function printSummary() {
+      const preview = document.getElementById("order-preview");
+      let summaryHTML = "<ul>";
+      cart.forEach(item => {
+        summaryHTML += `<li>${item.name} - ₦${item.price} x ${item.quantity}</li>`;
+      });
+      summaryHTML += "</ul>";
+      summaryHTML += `<p>Total: ₦${document.getElementById("cart-total").textContent}</p>`;
+      preview.innerHTML = summaryHTML;
+      window.print();
     }
 
     function showToast(message) {
