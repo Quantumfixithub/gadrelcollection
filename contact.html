@@ -7,27 +7,30 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Vertical Navigation -->
+  <nav class="vertical-nav">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li>
+        <a href="#">Shop</a>
+        <ul class="dropdown">
+          <li><a href="mens.html">Men</a></li>
+          <li><a href="womens.html">Women</a></li>
+          <li><a href="accessories.html">Accessories</a></li>
+        </ul>
+      </li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="checkout.html">Cart (<span id="cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
+
+  <!-- Page Header -->
   <header>
     <h1>Contact Gadrel Collection</h1>
-  <nav class="vertical-nav">
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li>
-      <a href="#">Shop</a>
-      <ul class="dropdown">
-        <li><a href="mens.html">Men</a></li>
-        <li><a href="womens.html">Women</a></li>
-        <li><a href="accessories.html">Accessories</a></li>
-      </ul>
-    </li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-    <li><a href="checkout.html">Cart (<span id="cart-count">0</span>)</a></li>
-  </ul>
-</nav>
-
   </header>
 
+  <!-- Contact Section -->
   <section class="contact-section">
     <h2>We’d love to hear from you!</h2>
     <p>Whether you have questions, feedback, or need help with an order, reach out anytime.</p>
@@ -53,8 +56,19 @@
     </form>
   </section>
 
+  <!-- Footer -->
   <footer>
     <p>&copy; 2025 Gadrel Collection</p>
   </footer>
+
+  <!-- Cart count updater -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const cartCount = document.getElementById("cart-count");
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = totalItems;
+    });
+  </script>
 </body>
 </html>
