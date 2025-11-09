@@ -402,6 +402,67 @@ main, .content, .product-grid, .about-section, .contact-section {
 .whatsapp-float:hover {
   background-color: #1ebe5d;
 }
+.payment-section {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.payment-section form {
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-section label {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.payment-section input {
+  padding: 0.75rem;
+  margin-top: 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.shop-button {
+  margin-top: 2rem;
+  background-color: #111;
+  color: #fff;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.shop-button:hover {
+  background-color: #333;
+}
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25D366;
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 50px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 999;
+}
+
+.whatsapp-float:hover {
+  background-color: #1ebe5d;
+}
+
 
 
 
