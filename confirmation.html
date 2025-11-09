@@ -36,11 +36,7 @@
     <ul id="order-details"></ul>
   </section>
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Gadrel Collection</p>
-  </footer>
-
+ 
   <!-- Display Order Details -->
   <script>
     const order = JSON.parse(localStorage.getItem("lastOrder"));
@@ -56,7 +52,16 @@
       list.innerHTML = "<li>No order found.</li>";
     }
   </script>
-
+<footer class="site-footer">
+  <div class="footer-content">
+    <p>&copy; 2025 Gadrel Collection. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="https://instagram.com/gadrelcollection" target="_blank">Instagram</a>
+      <a href="https://wa.me/2348123456789" target="_blank">WhatsApp</a>
+      <a href="mailto:support@gadrelcollection.com">Email Us</a>
+    </div>
+  </div>
+</footer>
   <!-- Update Cart Count -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -68,4 +73,5 @@
   </script>
 </body>
 </html>
+
 
