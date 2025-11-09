@@ -7,24 +7,25 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <nav class="vertical-nav">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li>
+        <a href="#">Shop</a>
+        <ul class="dropdown">
+          <li><a href="mens.html">Men</a></li>
+          <li><a href="womens.html">Women</a></li>
+          <li><a href="accessories.html">Accessories</a></li>
+        </ul>
+      </li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="checkout.html">Cart (<span id="cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
+
   <header>
     <h1>About Gadrel Collection</h1>
-    <nav class="vertical-nav">
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li>
-      <a href="#">Shop</a>
-      <ul class="dropdown">
-        <li><a href="mens.html">Men</a></li>
-        <li><a href="womens.html">Women</a></li>
-        <li><a href="accessories.html">Accessories</a></li>
-      </ul>
-    </li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-    <li><a href="checkout.html">Cart (<span id="cart-count">0</span>)</a></li>
-  </ul>
-</nav>
   </header>
 
   <section class="about-section">
@@ -46,5 +47,15 @@
   <footer>
     <p>&copy; 2025 Gadrel Collection</p>
   </footer>
+
+  <script>
+    // Update cart count on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const cartCount = document.getElementById("cart-count");
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = totalItems;
+    });
+  </script>
 </body>
 </html>
