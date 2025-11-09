@@ -10,6 +10,13 @@ function loadCart() {
     updateCartCount();
     return;
   }
+function clearCart() {
+  if (confirm("Are you sure you want to clear your cart?")) {
+    localStorage.removeItem("cart");
+    cart.length = 0; // Clear the in-memory cart array
+    renderCart();
+  }
+}
 
   let total = 0;
 
