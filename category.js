@@ -39,7 +39,7 @@ function displayProducts(products) {
     const div = document.createElement("div");
     div.className = "product";
     div.innerHTML = `
-      <img src="${product.image}" alt="${escapeHtml(product.name)}" />
+     <img src="${product.image}" alt="${escapeHtml(product.name)}" loading="lazy" onclick="openModal('${product.image}', '${escapeJs(product.name)}')" />
       <h3>${escapeHtml(product.name)}</h3>
       <p>₦${product.price}</p>
       ${product.sale ? '<span class="sale-tag">SALE</span>' : ""}
