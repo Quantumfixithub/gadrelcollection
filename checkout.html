@@ -7,49 +7,63 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Vertical Navigation -->
- <nav class="top-nav">
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li class="dropdown-parent">
-      <a href="#">Shop</a>
-      <ul class="dropdown">
-        <li><a href="mens.html">Men</a></li>
-        <li><a href="womens.html">Women</a></li>
-        <li><a href="accessories.html">Accessories</a></li>
-      </ul>
-    </li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-    <li><a href="checkout.html">Cart (<span id="cart-count">0</span>)</a></li>
-  </ul>
-</nav>
+  <nav class="top-nav">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="checkout.html">Cart (<span id="cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
 
-
-  <!-- Page Header -->
   <header>
-    <h1>Gadrel Collection</h1>
+    <h1>Your Cart</h1>
   </header>
 
-  <!-- Checkout Section -->
-  <section class="checkout-section">
-    <h2>Your Cart</h2>
-    <div id="cart-items"></div>
-    <div id="cart-summary"></div>
+  <section class="cart-section" id="cart-items"></section>
+
+  <section class="cart-summary">
+    <h2>Total: ₦<span id="cart-total">0</span></h2>
+    <button class="checkout-button" onclick="proceedToPayment()">Proceed to Payment</button>
   </section>
 
-  <!-- Cart functionality -->
-  <script src="checkout.js"></script>
+  <footer>
+    <p>&copy; 2025 Gadrel Collection</p>
+  </footer>
 
-  <!-- Cart count updater -->
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function renderCart() {
+      const container = document.getElementById("cart-items");
+      const totalDisplay = document.getElementById("cart-total");
       const cartCount = document.getElementById("cart-count");
-      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-      cartCount.textContent = totalItems;
-    });
+
+      container.innerHTML = "";
+      let total = 0;
+
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+          <h3>${item.name}</h3>
+          <p>₦${item.price} x ${item.quantity} = ₦${itemTotal}</p>
+        `;
+        container.appendChild(div);
+      });
+
+      totalDisplay.textContent = total;
+      cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    }
+
+    function proceedToPayment() {
+      alert("Redirecting to payment gateway...");
+      // Replace with actual payment integration or redirect
+      window.location.href = "payment.html";
+    }
+
+    document.addEventListener("DOMContentLoaded", renderCart);
   </script>
 </body>
 </html>
-
