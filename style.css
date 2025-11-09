@@ -305,6 +305,48 @@ footer {
   font-size: 1rem;
 }
 
+.contact-section {
+  max-width: 700px;
+  margin: auto;
+  padding: 2rem;
+  line-height: 1.8;
+}
+
+.contact-section h2 {
+  margin-bottom: 1rem;
+  color: #111;
+}
+
+.contact-details {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 2rem;
+}
+
+.contact-details li {
+  margin-bottom: 0.75rem;
+}
+
+.contact-form label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.contact-form button {
+  margin-top: 1.5rem;
+}
+
 
 
 
