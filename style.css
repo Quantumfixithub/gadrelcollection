@@ -69,3 +69,37 @@
     border-top: none;
   }
 }
+/* ------------------ Responsive Product Images ------------------ */
+.product img {
+  width: 100%;
+  height: auto;
+  max-width: 400px; /* Optional: limits image size on large screens */
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Optional: Responsive product grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+.product img {
+  width: 100%;
+  height: auto;
+  max-width: 400px;
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  cursor: zoom-in;
+}
+
+.product img:hover {
+  transform: scale(1.05);
+}
+
