@@ -51,43 +51,52 @@
   🟢 Chat on WhatsApp
 </a>
   <script>
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    function renderCart() {
-      const container = document.getElementById("cart-items");
-      const totalDisplay = document.getElementById("cart-total");
-      const cartCount = document.getElementById("cart-count");
+  function renderCart() {
+    const container = document.getElementById("cart-items");
+    const totalDisplay = document.getElementById("cart-total");
+    const cartCount = document.getElementById("cart-count");
 
-      container.innerHTML = "";
-      let total = 0;
+    container.innerHTML = "";
+    let total = 0;
 
-      cart.forEach(item => {
-        const itemTotal = item.price * item.quantity;
-        total += itemTotal;
+    cart.forEach(item => {
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal;
 
-        const div = document.createElement("div");
-        div.className = "cart-item";
-        div.innerHTML = `
-          <h3>${item.name}</h3>
-          <p>₦${item.price} x ${item.quantity} = ₦${itemTotal}</p>
-        `;
-        container.appendChild(div);
-      });
+      const div = document.createElement("div");
+      div.className = "cart-item";
+      div.innerHTML = `
+        <h3>${item.name}</h3>
+        <p>₦${item.price} x ${item.quantity} = ₦${itemTotal}</p>
+      `;
+      container.appendChild(div);
+    });
 
-      totalDisplay.textContent = total;
-      cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    totalDisplay.textContent = total;
+    cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+  }
+
+  function proceedToPayment() {
+    alert("Redirecting to payment gateway...");
+    window.location.href = "payment.html";
+  }
+
+  // ✅ Clear Cart Function
+  function clearCart() {
+    if (confirm("Are you sure you want to clear your cart?")) {
+      localStorage.removeItem("cart");
+      cart.length = 0;
+      renderCart();
     }
+  }
 
-    function proceedToPayment() {
-      alert("Redirecting to payment gateway...");
-      // Replace with actual payment integration or redirect
-      window.location.href = "payment.html";
-    }
-
-    document.addEventListener("DOMContentLoaded", renderCart);
-  </script>
+  document.addEventListener("DOMContentLoaded", renderCart);
+</script>
 </body>
 </html>
+
 
 
 
