@@ -20,7 +20,14 @@
       color: #fff;
     }
 
-    .hero {
+    .video-banner video {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+    }
+
+    .hero, .brand-story, .featured-products, .newsletter {
       text-align: center;
       padding: 2rem 1rem;
     }
@@ -31,10 +38,6 @@
       height: auto;
       margin-bottom: 1rem;
       border-radius: 8px;
-    }
-
-    .cta {
-      margin-top: 1rem;
     }
 
     .cta-button {
@@ -52,14 +55,47 @@
       background-color: #1ebe5d;
     }
 
-    .brand-story {
-      text-align: center;
-      padding: 2rem 1rem;
-      background: #fff;
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: auto;
+      padding: 1rem;
     }
 
-    .brand-story h2 {
-      margin-bottom: 1rem;
+    .product-card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .add-button {
+      margin-top: 1rem;
+      background-color: #25D366;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .newsletter input {
+      padding: 0.5rem;
+      width: 250px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-right: 0.5rem;
     }
 
     .site-footer {
@@ -91,7 +127,7 @@
   </style>
 </head>
 <body>
-  <!-- Top Navigation -->
+  <!-- Navigation -->
   <nav class="top-nav">
     <ul>
       <li><a href="index.html">Home</a></li>
@@ -109,16 +145,23 @@
     </ul>
   </nav>
 
-  <!-- Page Header -->
+  <!-- Header -->
   <header>
     <h1>Gadrel Collection</h1>
     <p>Timeless fashion for every style</p>
   </header>
 
+  <!-- Video Banner -->
+  <section class="video-banner">
+    <video autoplay muted loop playsinline>
+      <source src="https://player.vimeo.com/external/449938900.sd.mp4?s=3f6e9f6b6d3e7f9a7f8f6e9f6b6d3e7f&profile_id=164" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </section>
+
   <!-- Hero Section -->
   <section class="hero">
     <img src="https://img.freepik.com/premium-vector/new-season-fashion-collection-signage-billboard-web-banner-design-template_873923-257.jpg?w=2000" alt="Seasonal Collection" />
-    <img src="https://img.freepik.com/premium-vector/best-fashion-sale-banner-template_48159-401.jpg?w=740" alt="Best Sellers" />
     <div class="cta">
       <a href="shop.html" class="cta-button">Explore the Collection</a>
     </div>
@@ -130,13 +173,42 @@
     <p>Affordable luxury for every style. Fashion that speaks for both men and women.</p>
   </section>
 
+  <!-- Featured Products -->
+  <section class="featured-products">
+    <h2>Featured Picks</h2>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="https://elevennewyork.com/wp-content/uploads/2020/09/01_white-tee_front-scaled.jpg" alt="Classic Tee" />
+        <h3>Classic Tee</h3>
+        <p>₦4500</p>
+        <a href="shop.html" class="add-button">Shop Now</a>
+      </div>
+      <div class="product-card">
+        <img src="https://gearmoose.com/wp-content/uploads/2017/04/best-all-white-sneakers-for-men.jpg" alt="Sneakers" />
+        <h3>White Sneakers</h3>
+        <p>₦10000</p>
+        <a href="shop.html" class="add-button">Shop Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Signup -->
+  <section class="newsletter">
+    <h2>Stay Updated</h2>
+    <p>Get the latest arrivals and style tips delivered to your inbox.</p>
+    <form action="https://YOUR_MAILCHIMP_URL" method="POST" target="_blank">
+      <input type="email" name="EMAIL" placeholder="Enter your email" required />
+      <button type="submit" class="cta-button">Subscribe</button>
+    </form>
+  </section>
+
   <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-content">
       <p>&copy; 2025 Gadrel Collection. All rights reserved.</p>
       <div class="footer-links">
         <a href="https://instagram.com/gadrelcollection" target="_blank">Instagram</a>
-        <a href="mailto:johnamoke18@gmail.com">Email Us</a>
+        <a href="mailto:support@gadrelcollection.com">Email Us</a>
       </div>
     </div>
   </footer>
@@ -155,8 +227,5 @@
       cartCount.textContent = totalItems;
     });
   </script>
-
-  <!-- Optional: Additional scripts -->
-  <script src="script.js"></script>
 </body>
 </html>
