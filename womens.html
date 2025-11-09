@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Optional: Mobile Nav Toggle -->
+  <button class="nav-toggle" onclick="toggleNav()">☰ Menu</button>
+
+  <!-- Vertical Navigation -->
   <nav class="vertical-nav">
     <ul>
       <li><a href="index.html">Home</a></li>
@@ -24,14 +28,33 @@
     </ul>
   </nav>
 
+  <!-- Page Header -->
   <header>
     <h1>Women's Collection</h1>
   </header>
 
+  <!-- Product Grid -->
   <section class="product-grid" id="product-list">
     <!-- Products will be loaded here -->
   </section>
 
+  <!-- Load filtered products -->
   <script src="category.js"></script>
+
+  <!-- Cart count updater -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const cartCount = document.getElementById("cart-count");
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = totalItems;
+    });
+
+    // Optional: Toggle nav for mobile
+    function toggleNav() {
+      const nav = document.querySelector('.vertical-nav');
+      nav.classList.toggle('active');
+    }
+  </script>
 </body>
 </html>
