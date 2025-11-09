@@ -1,98 +1,71 @@
-/* ------------------ Header & Vertical Navigation ------------------ */
-header {
+/* ------------------ Top Horizontal Navigation ------------------ */
+.top-nav {
   background-color: #111;
-  color: #fff;
-  padding: 1rem;
-  text-align: center;
-  margin-left: 200px; /* offset for vertical nav */
-}
-
-header h1 {
-  margin: 0;
-  font-size: 1.8rem;
-}
-
-.vertical-nav {
-  width: 200px;
-  background-color: #111;
-  padding: 1rem 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  overflow-y: auto;
+  padding: 0;
+  position: relative;
   z-index: 100;
 }
 
-.vertical-nav ul {
+.top-nav ul {
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.vertical-nav ul li {
+.top-nav ul li {
   position: relative;
 }
 
-.vertical-nav ul li a {
+.top-nav ul li a {
   display: block;
   color: #fff;
-  padding: 0.75rem 1.5rem;
+  padding: 1rem 1.5rem;
   text-decoration: none;
   font-weight: 600;
   transition: background 0.3s ease;
 }
 
-.vertical-nav ul li a:hover {
+.top-nav ul li a:hover {
   background-color: #333;
 }
 
-.vertical-nav .dropdown {
+/* Dropdown styling */
+.top-nav .dropdown {
   display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
   background-color: #222;
-  margin-left: 1rem;
-  border-left: 2px solid #444;
+  min-width: 160px;
+  border-top: 2px solid #444;
 }
 
-.vertical-nav li:hover .dropdown {
-  display: block;
-}
-
-.vertical-nav .dropdown li a {
-  padding: 0.5rem 1.5rem;
+.top-nav .dropdown li a {
+  padding: 0.75rem 1rem;
   font-weight: normal;
   font-size: 0.95rem;
 }
 
-/* Push main content to the right of the nav */
-main,
-.hero,
-section,
-footer {
-  margin-left: 200px;
+.top-nav .dropdown-parent:hover .dropdown {
+  display: block;
 }
 
-/* ------------------ Responsive Navigation ------------------ */
+/* ------------------ Responsive ------------------ */
 @media (max-width: 768px) {
-  .vertical-nav {
-    position: static;
-    width: 100%;
-    height: auto;
-    padding: 0;
+  .top-nav ul {
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .vertical-nav ul li {
-    border-bottom: 1px solid #444;
-  }
-
-  .vertical-nav ul li a {
+  .top-nav ul li a {
     padding: 0.75rem 1rem;
   }
 
-  main,
-  .hero,
-  section,
-  footer {
-    margin-left: 0;
+  .top-nav .dropdown {
+    position: static;
+    border-top: none;
   }
 }
