@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-   <!-- Top Navigation -->
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <ul>
       <li><a href="index.html">Home</a></li>
@@ -32,74 +32,186 @@
   <section class="cart-section" id="cart-items"></section>
 
   <section class="cart-summary">
-  <h2>Total: ₦<span id="cart-total">0</span></h2>
-  <button class="checkout-button" onclick="proceedToPayment()">Proceed to Payment</button>
-  <button class="clear-button" onclick="clearCart()">Clear Cart</button>
-</section>
+    <h2>Total: ₦<span id="cart-total">0</span></h2>
+    <button class="checkout-button" onclick="proceedToPayment()">Proceed to Payment</button>
+    <button class="clear-button" onclick="clearCart()">Clear Cart</button>
+    <button class="clear-button" onclick="clearSelected()">Clear Selected</button>
 
-
-<footer class="site-footer">
-  <div class="footer-content">
-    <p>&copy; 2025 Gadrel Collection. All rights reserved.</p>
-    <div class="footer-links">
-      <a href="https://instagram.com/gadrelcollection" target="_blank">Instagram</a>
-     <a href="mailto:support@gadrelcollection.com">Email Us</a>
+    <div class="discount-box">
+      <label for="discount-code">Discount Code:</label>
+      <input type="text" id="discount-code" placeholder="Enter code" />
+      <button onclick="applyDiscount()">Apply</button>
     </div>
-  </div>
-</footer>
+    <p class="delivery-estimate">Estimated Delivery: 2–5 business days</p>
+  </section>
+
+  <section class="saved-section">
+    <h2>Saved for Later</h2>
+    <div id="saved-items"></div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Gadrel Collection. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="https://instagram.com/gadrelcollection" target="_blank">Instagram</a>
+        <a href="mailto:support@gadrelcollection.com">Email Us</a>
+      </div>
+    </div>
+  </footer>
+
   <a href="https://wa.me/2348105429924" class="whatsapp-float" target="_blank" title="Chat with us">
-  🟢 Chat on WhatsApp
-</a>
- <script>
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    🟢 Chat on WhatsApp
+  </a>
 
-  function renderCart() {
-    const container = document.getElementById("cart-items");
-    const totalDisplay = document.getElementById("cart-total");
-    const cartCount = document.getElementById("cart-count");
+  <div id="toast" class="toast"></div>
 
-    container.innerHTML = "";
-    let total = 0;
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let saved = JSON.parse(localStorage.getItem("saved")) || [];
+    let discount = 0;
 
-    cart.forEach(item => {
-      const itemTotal = item.price * item.quantity;
-      total += itemTotal;
+    function renderCart() {
+      const container = document.getElementById("cart-items");
+      const totalDisplay = document.getElementById("cart-total");
+      const cartCount = document.getElementById("cart-count");
 
-      const div = document.createElement("div");
-      div.className = "cart-item";
-      div.innerHTML = `
-        <h3>${item.name}</h3>
-        <p>₦${item.price} x ${item.quantity} = ₦${itemTotal}</p>
-      `;
-      container.appendChild(div);
-    });
+      container.innerHTML = "";
+      let total = 0;
 
-    totalDisplay.textContent = total;
-    cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-  }
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
 
-  function proceedToPayment() {
-    alert("Redirecting to payment gateway...");
-    window.location.href = "payment.html";
-  }
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+          <label>
+            <input type="checkbox" class="item-check" data-index="${index}" />
+            <strong>${item.name}</strong>
+          </label>
+          <p>₦${item.price} x 
+            <input type="number" min="1" value="${item.quantity}" class="qty-input" data-index="${index}" />
+            = ₦${itemTotal}
+          </p>
+          <button onclick="saveForLater(${index})">Save for Later</button>
+        `;
+        container.appendChild(div);
+      });
 
-  function clearCart() {
-    if (confirm("Are you sure you want to clear your cart?")) {
-      localStorage.removeItem("cart");
-      cart.length = 0;
+      const discountedTotal = total - total * discount;
+      totalDisplay.textContent = Math.round(discountedTotal);
+      cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+      document.querySelectorAll(".qty-input").forEach(input => {
+        input.addEventListener("change", updateQuantity);
+      });
+    }
+
+    function updateQuantity(e) {
+      const index = parseInt(e.target.dataset.index);
+      const newQty = parseInt(e.target.value);
+      if (newQty > 0) {
+        cart[index].quantity = newQty;
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+        showToast("Quantity updated");
+      }
+    }
+
+    function proceedToPayment() {
+      alert("Redirecting to payment gateway...");
+      window.location.href = "payment.html";
+    }
+
+    function clearCart() {
+      if (confirm("Are you sure you want to clear your cart?")) {
+        localStorage.removeItem("cart");
+        cart = [];
+        renderCart();
+        showToast("Cart cleared");
+      }
+    }
+
+    function clearSelected() {
+      const checkboxes = document.querySelectorAll(".item-check:checked");
+      const indexesToRemove = Array.from(checkboxes).map(cb => parseInt(cb.dataset.index));
+
+      if (indexesToRemove.length === 0) {
+        alert("No items selected.");
+        return;
+      }
+
+      if (confirm("Remove selected items from cart?")) {
+        indexesToRemove.sort((a, b) => b - a).forEach(index => {
+          cart.splice(index, 1);
+        });
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+        showToast("Selected items removed");
+      }
+    }
+
+    function saveForLater(index) {
+      saved.push(cart[index]);
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem("saved", JSON.stringify(saved));
+      renderCart();
+      renderSaved();
+      showToast("Item saved for later");
+    }
+
+    function renderSaved() {
+      const container = document.getElementById("saved-items");
+      container.innerHTML = "";
+
+      saved.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "saved-item";
+        div.innerHTML = `
+          <strong>${item.name}</strong>
+          <p>₦${item.price} x ${item.quantity}</p>
+          <button onclick="moveToCart(${index})">Move to Cart</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function moveToCart(index) {
+      cart.push(saved[index]);
+      saved.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem("saved", JSON.stringify(saved));
+      renderCart();
+      renderSaved();
+      showToast("Item moved to cart");
+    }
+
+    function applyDiscount() {
+      const code = document.getElementById("discount-code").value.trim().toLowerCase();
+      if (code === "gadrel10") {
+        discount = 0.10;
+        showToast("10% discount applied!");
+      } else {
+        discount = 0;
+        showToast("Invalid discount code");
+      }
       renderCart();
     }
-  }
 
-  document.addEventListener("DOMContentLoaded", renderCart);
-</script>
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 3000);
+    }
 
+    document.addEventListener("DOMContentLoaded", () => {
+      renderCart();
+      renderSaved();
+    });
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
