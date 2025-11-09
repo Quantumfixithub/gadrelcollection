@@ -36,7 +36,15 @@ function loadCart() {
 
 function updateQuantity(index, newQty) {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart[index].quantity = parseInt(newQty);
+  const quantity = parseInt(newQty);
+
+  if (isNaN(quantity) || quantity < 1) {
+    alert("Quantity must be at least 1.");
+    loadCart();
+    return;
+  }
+
+  cart[index].quantity = quantity;
   localStorage.setItem("cart", JSON.stringify(cart));
   loadCart();
 }
