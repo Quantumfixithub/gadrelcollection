@@ -1,126 +1,38 @@
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-// Determine category based on current page
-function getCategoryFromPage() {
-  const path = window.location.pathname;
-  if (path.includes("mens")) return "Men";
-  if (path.includes("womens")) return "Women";
-  if (path.includes("accessories")) return "Accessories";
-  return null;
-}
-
-// Load and filter products based on category
-function loadCategoryProducts() {
-  const products = [
-    {
-      id: "mens-shirt",
-      name: "Men's Shirt",
-      category: "Clothing",
-      gender: "Men",
-      price: 8000,
-      image: "https://i5.walmartimages.com/seo/GENTS-BLISS-Long-Sleeve-Mens-Dress-Shirts-Casual-Solid-Shirts-for-Men-Regular-Oxford-Tops-with-Pocket_4fff4355-09b7-4425-8638-1fea32177708.59a395eb56c500a6c61b6bac72f81bcd.jpeg",
-      sale: false
-    },
-    {
-      id: "womens-bag",
-      name: "Women's Bag",
-      category: "Bags",
-      gender: "Women",
-      price: 12000,
-      image: "https://i5.walmartimages.com/asr/a3075ac0-fbad-4757-bde3-f593b8222583.43162b722ef99c6addcf8c46ca345d80.jpeg",
-      sale: true
-    },
-    {
-      id: "sneakers",
-      name: "Sneakers",
-      category: "Footwear",
-      gender: "Unisex",
-      price: 15000,
-      image: "https://staticg.sportskeeda.com/editor/2022/08/0ce54-16607391770831-1920.jpg",
-      sale: false
-    },
-    {
-      id: "mens-jacket",
-      name: "Men's Jacket",
-      category: "Clothing",
-      gender: "Men",
-      price: 18000,
-      image: "https://i5.walmartimages.com/asr/2eee434f-89cc-4c7e-9324-849dd8cfa45c.92c508323e1e751c4e5b7ef5080640bd.jpeg",
-      sale: true
-    }
-  ];
-
-  const category = getCategoryFromPage();
-  const filtered = products.filter(p => {
-    if (category === "Accessories") {
-      return p.category === "Bags" || p.category === "Footwear";
-    }
-    return p.gender === category;
-  });
-
-  displayProducts(filtered);
-}
-
-// Render products to the page
-function displayProducts(products) {
-  const container = document.getElementById("product-list");
-  if (!container) return;
-
-  container.innerHTML = "";
-  products.forEach(product => {
-    const div = document.createElement("div");
-    div.className = "product";
-    div.innerHTML = `
-      <img src="${product.image}" alt="${escapeHtml(product.name)}" />
-      <h3>${escapeHtml(product.name)}</h3>
-      <p>₦${product.price}</p>
-      ${product.sale ? '<span class="sale-tag">SALE</span>' : ""}
-      <button onclick="addToCart('${escapeJs(product.name)}', ${product.price})">Add to Cart</button>
-    `;
-    container.appendChild(div);
-  });
-}
-
-// Add item to cart
-function addToCart(name, price) {
-  const existingItem = cart.find(item => item.name === name);
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    cart.push({ name, price, quantity: 1 });
+[
+  {
+    "id": "mens-shirt",
+    "name": "Men's Shirt",
+    "category": "Clothing",
+    "gender": "Men",
+    "price": 8000,
+    "image": "https://i5.walmartimages.com/seo/GENTS-BLISS-Long-Sleeve-Mens-Dress-Shirts-Casual-Solid-Shirts-for-Men-Regular-Oxford-Tops-with-Pocket_4fff4355-09b7-4425-8638-1fea32177708.59a395eb56c500a6c61b6bac72f81bcd.jpeg",
+    "sale": false
+  },
+  {
+    "id": "womens-bag",
+    "name": "Women's Bag",
+    "category": "Bags",
+    "gender": "Women",
+    "price": 12000,
+    "image": "https://i5.walmartimages.com/asr/a3075ac0-fbad-4757-bde3-f593b8222583.43162b722ef99c6addcf8c46ca345d80.jpeg",
+    "sale": true
+  },
+  {
+    "id": "sneakers",
+    "name": "Sneakers",
+    "category": "Footwear",
+    "gender": "Unisex",
+    "price": 15000,
+    "image": "https://staticg.sportskeeda.com/editor/2022/08/0ce54-16607391770831-1920.jpg",
+    "sale": false
+  },
+  {
+    "id": "mens-jacket",
+    "name": "Men's Jacket",
+    "category": "Clothing",
+    "gender": "Men",
+    "price": 18000,
+    "image": "https://i5.walmartimages.com/asr/2eee434f-89cc-4c7e-9324-849dd8cfa45c.92c508323e1e751c4e5b7ef5080640bd.jpeg",
+    "sale": true
   }
-  localStorage.setItem("cart", JSON.stringify(cart));
-  updateCartCount();
-}
-
-// Update cart count in nav
-function updateCartCount() {
-  const cartCount = document.getElementById("cart-count");
-  if (!cartCount) return;
-
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  cartCount.textContent = totalItems;
-}
-
-// Escape HTML for safe rendering
-function escapeHtml(text) {
-  const map = {
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
-  };
-  return text.replace(/[&<>"']/g, m => map[m]);
-}
-
-// Escape JS string for safe inline use
-function escapeJs(text) {
-  return text.replace(/'/g, "\\'");
-}
-
-// Initialize on page load
-document.addEventListener("DOMContentLoaded", () => {
-  loadCategoryProducts();
-  updateCartCount();
-});
+]
