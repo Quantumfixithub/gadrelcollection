@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Vertical Navigation -->
   <nav class="vertical-nav">
     <ul>
       <li><a href="index.html">Home</a></li>
@@ -24,14 +25,27 @@
     </ul>
   </nav>
 
+  <!-- Page Header -->
   <header>
     <h1>Accessories</h1>
   </header>
 
+  <!-- Product Grid -->
   <section class="product-grid" id="product-list">
     <!-- Products will be loaded here -->
   </section>
 
+  <!-- Load filtered products -->
   <script src="category.js"></script>
+
+  <!-- Update cart count -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const cartCount = document.getElementById("cart-count");
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = totalItems;
+    });
+  </script>
 </body>
 </html>
