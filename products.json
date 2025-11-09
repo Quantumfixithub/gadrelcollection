@@ -1,5 +1,6 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+// Determine category based on current page
 function getCategoryFromPage() {
   const path = window.location.pathname;
   if (path.includes("mens")) return "Men";
@@ -8,6 +9,7 @@ function getCategoryFromPage() {
   return null;
 }
 
+// Load and filter products based on category
 function loadCategoryProducts() {
   const products = [
     {
@@ -50,30 +52,36 @@ function loadCategoryProducts() {
 
   const category = getCategoryFromPage();
   const filtered = products.filter(p => {
-    if (category === "Accessories") return p.category === "Bags" || p.category === "Footwear";
+    if (category === "Accessories") {
+      return p.category === "Bags" || p.category === "Footwear";
+    }
     return p.gender === category;
   });
 
   displayProducts(filtered);
 }
 
+// Render products to the page
 function displayProducts(products) {
   const container = document.getElementById("product-list");
+  if (!container) return;
+
   container.innerHTML = "";
   products.forEach(product => {
     const div = document.createElement("div");
     div.className = "product";
     div.innerHTML = `
-      <img src="${product.image}" alt="${product.name}" />
-      <h3>${product.name}</h3>
+      <img src="${product.image}" alt="${escapeHtml(product.name)}" />
+      <h3>${escapeHtml(product.name)}</h3>
       <p>₦${product.price}</p>
-      ${product.sale ? '<span class="sale-tag">SALE</span>' : ''}
-      <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
+      ${product.sale ? '<span class="sale-tag">SALE</span>' : ""}
+      <button onclick="addToCart('${escapeJs(product.name)}', ${product.price})">Add to Cart</button>
     `;
     container.appendChild(div);
   });
 }
 
+// Add item to cart
 function addToCart(name, price) {
   const existingItem = cart.find(item => item.name === name);
   if (existingItem) {
@@ -85,12 +93,33 @@ function addToCart(name, price) {
   updateCartCount();
 }
 
+// Update cart count in nav
 function updateCartCount() {
   const cartCount = document.getElementById("cart-count");
+  if (!cartCount) return;
+
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   cartCount.textContent = totalItems;
 }
 
+// Escape HTML for safe rendering
+function escapeHtml(text) {
+  const map = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  };
+  return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+// Escape JS string for safe inline use
+function escapeJs(text) {
+  return text.replace(/'/g, "\\'");
+}
+
+// Initialize on page load
 document.addEventListener("DOMContentLoaded", () => {
   loadCategoryProducts();
   updateCartCount();
