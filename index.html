@@ -7,47 +7,63 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Vertical Navigation -->
+  <nav class="vertical-nav">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li>
+        <a href="#">Shop</a>
+        <ul class="dropdown">
+          <li><a href="mens.html">Men</a></li>
+          <li><a href="womens.html">Women</a></li>
+          <li><a href="accessories.html">Accessories</a></li>
+        </ul>
+      </li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="checkout.html">Cart (<span id="cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
+
+  <!-- Page Header -->
   <header>
     <h1>Gadrel Collection</h1>
-    <nav class="vertical-nav">
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li>
-      <a href="#">Shop</a>
-      <ul class="dropdown">
-        <li><a href="mens.html">Men</a></li>
-        <li><a href="womens.html">Women</a></li>
-        <li><a href="accessories.html">Accessories</a></li>
-      </ul>
-    </li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-    <li><a href="checkout.html">Cart (<span id="cart-count">0</span>)</a></li>
-  </ul>
-</nav>
-
   </header>
 
+  <!-- Hero Section -->
   <section class="hero">
     <img src="images/banner1.jpg" alt="Seasonal Collection" />
     <img src="images/banner2.jpg" alt="Best Sellers" />
   </section>
 
+  <!-- Promo Section -->
   <section class="promo">
     <h2>🔥 Flash Sale: Up to 30% Off!</h2>
     <p>Use code GADREL30 at checkout</p>
   </section>
 
+  <!-- Brand Story -->
   <section class="brand-story">
     <h2>Discover the elegance of Gadrel Collection</h2>
     <p>Affordable luxury for every style. Fashion that speaks for both men and women.</p>
   </section>
 
+  <!-- Footer -->
   <footer>
     <p>&copy; 2025 Gadrel Collection</p>
   </footer>
 
+  <!-- Cart count updater -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const cartCount = document.getElementById("cart-count");
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = totalItems;
+    });
+  </script>
+
+  <!-- Optional: Additional scripts -->
   <script src="script.js"></script>
 </body>
 </html>
-
