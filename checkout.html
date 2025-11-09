@@ -5,8 +5,186 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Checkout - Gadrel Collection</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: #111;
+      color: #fff;
+    }
+
+    .cart-section, .cart-summary, .saved-section, .order-summary {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .cart-item, .saved-item {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border: 1px solid #eee;
+      border-radius: 6px;
+    }
+
+    .cart-item input[type="number"] {
+      width: 60px;
+    }
+
+    button {
+      padding: 0.75rem 1.25rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover:not(:disabled) {
+      background-color: #111;
+      color: #fff;
+      transform: scale(1.02);
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .checkout-button {
+      background-color: #25D366;
+      color: white;
+    }
+
+    .clear-button {
+      background-color: #d10000;
+      color: white;
+      margin-left: 0.5rem;
+    }
+
+    .move-button {
+      background-color: #007bff;
+      color: white;
+      margin-top: 0.5rem;
+    }
+
+    .discount-box, .shipping-method {
+      margin-top: 1rem;
+    }
+
+    .discount-box input {
+      padding: 0.5rem;
+      margin-right: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    .delivery-estimate {
+      margin-top: 1rem;
+      font-style: italic;
+      color: #555;
+    }
+
+    .loyalty-points {
+      margin-top: 1rem;
+      font-weight: bold;
+      color: #2e7d32;
+    }
+
+    .progress-bar {
+      width: 100%;
+      background-color: #eee;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 1rem;
+      height: 12px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background-color: #25D366;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    .progress-label {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 0.5rem;
+    }
+
+    .payment-icons, .trust-badges {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .payment-icons img, .trust-badges img {
+      max-width: 80px;
+      height: auto;
+      flex-shrink: 0;
+    }
+
+    .site-footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: #111;
+      color: #fff;
+    }
+
+    .footer-links a {
+      color: #25D366;
+      margin: 0 1rem;
+      text-decoration: none;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25D366;
+      color: white;
+      padding: 0.75rem 1rem;
+      border-radius: 50px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 999;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #111;
+      color: #fff;
+      padding: 1rem 2rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 999;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
+
   <!-- Top Navigation -->
   <nav class="top-nav">
     <ul>
@@ -87,7 +265,7 @@
       <p>&copy; 2025 Gadrel Collection. All rights reserved.</p>
       <div class="footer-links">
         <a href="https://instagram.com/gadrelcollection" target="_blank">Instagram</a>
-        <a href="mailto:support@gadrelcollection.com">Email Us</a>
+                <a href="mailto:support@gadrelcollection.com">Email Us</a>
       </div>
     </div>
   </footer>
@@ -127,7 +305,7 @@
             <input type="number" min="1" value="${item.quantity}" class="qty-input" data-index="${index}" />
             = ₦${itemTotal}
           </p>
-          <button onclick="saveForLater(${index})">Save for Later</button>
+          <button onclick="saveForLater(${index})" class="move-button">Save for Later</button>
         `;
         container.appendChild(div);
       });
@@ -164,8 +342,12 @@
     }
 
     function proceedToPayment() {
-      alert("Redirecting to payment gateway...");
-      window.location.href = "payment.html";
+      const btn = document.querySelector(".checkout-button");
+      btn.disabled = true;
+      btn.textContent = "Redirecting...";
+      setTimeout(() => {
+        window.location.href = "payment.html";
+      }, 1000);
     }
 
     function clearCart() {
@@ -217,8 +399,7 @@
         div.innerHTML = `
           <strong>${item.name}</strong>
           <p>₦${item.price} x ${item.quantity}</p>
-          <button onclick="moveToCart(${index})
-          <button onclick="moveToCart(${index})">Move to Cart</button>
+          <button onclick="moveToCart(${index})" class="move-button">Move to Cart</button>
         `;
         container.appendChild(div);
       });
@@ -236,19 +417,28 @@
 
     function applyDiscount() {
       const code = document.getElementById("discount-code").value.trim().toLowerCase();
-      if (code === "gadrel10") {
-        discount = 0.10;
-        showToast("10% discount applied!");
-      } else {
-        discount = 0;
-        showToast("Invalid discount code");
-      }
-      renderCart();
+      const applyBtn = document.querySelector(".discount-box button");
+      applyBtn.disabled = true;
+      applyBtn.textContent = "Applying...";
+
+      setTimeout(() => {
+        if (code === "gadrel10") {
+          discount = 0.10;
+          showToast("10% discount applied!");
+        } else {
+          discount = 0;
+          showToast("Invalid discount code");
+        }
+        applyBtn.disabled = false;
+        applyBtn.textContent = "Apply";
+        renderCart();
+      }, 800);
     }
 
     function updateShipping() {
       const method = document.getElementById("shipping").value;
       shippingFee = method === "express" ? 1500 : 0;
+      showToast(method === "express" ? "Express shipping selected (₦1500)" : "Standard shipping selected");
       renderCart();
     }
 
@@ -278,3 +468,5 @@
   </script>
 </body>
 </html>
+
+	
