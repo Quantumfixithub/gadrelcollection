@@ -42,7 +42,20 @@
       <input type="text" id="discount-code" placeholder="Enter code" />
       <button onclick="applyDiscount()">Apply</button>
     </div>
+
     <p class="delivery-estimate">Estimated Delivery: 2–5 business days</p>
+    <p class="loyalty-points">You’ll earn <span id="loyalty-points">0</span> points with this order</p>
+
+    <div class="progress-bar">
+      <div id="progress-fill" class="progress-fill"></div>
+    </div>
+    <p class="progress-label">Spend ₦<span id="progress-remaining">0</span> more to unlock free shipping!</p>
+
+    <div class="payment-icons">
+      <img src="https://tukuz.com/wp-content/uploads/2020/10/paystack-logo-vector.png" alt="Paystack" />
+      <img src="https://logos-world.net/wp-content/uploads/2020/04/Visa-Logo.png" alt="Visa" />
+      <img src="https://logospng.org/wp-content/uploads/mastercard.jpg" alt="Mastercard" />
+    </div>
   </section>
 
   <section class="saved-section">
@@ -102,6 +115,16 @@
       const discountedTotal = total - total * discount;
       totalDisplay.textContent = Math.round(discountedTotal);
       cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+      const points = Math.floor(discountedTotal / 100);
+      document.getElementById("loyalty-points").textContent = points;
+
+      const freeShippingThreshold = 10000;
+      const remaining = Math.max(0, freeShippingThreshold - discountedTotal);
+      document.getElementById("progress-remaining").textContent = remaining;
+
+      const progressPercent = Math.min(100, (discountedTotal / freeShippingThreshold) * 100);
+      document.getElementById("progress-fill").style.width = `${progressPercent}%`;
 
       document.querySelectorAll(".qty-input").forEach(input => {
         input.addEventListener("change", updateQuantity);
