@@ -39,15 +39,16 @@ function displayProducts(products) {
     const div = document.createElement("div");
     div.className = "product";
     div.innerHTML = `
-     <img src="${product.image}" alt="${escapeHtml(product.name)}" loading="lazy" onclick="openModal('${product.image}', '${escapeJs(product.name)}')" />
+      <img src="${product.image}" alt="${escapeHtml(product.name)}" loading="lazy" onclick="openModal('${product.image}', '${escapeJs(product.name)}')" />
       <h3>${escapeHtml(product.name)}</h3>
       <p>₦${product.price}</p>
       ${product.sale ? '<span class="sale-tag">SALE</span>' : ""}
-      <button onclick="addToCart('${escapeJs(product.name)}', ${product.price})">Add to Cart</button>
+      <button class="shop-button" onclick="addToCart('${escapeJs(product.name)}', ${product.price})">🛒 Add to Cart</button>
     `;
     container.appendChild(div);
   });
 }
+
 
 function addToCart(name, price) {
   const existingItem = cart.find(item => item.name === name);
