@@ -201,11 +201,31 @@
       updateCartCount();
 
       const products = [
-        { id: 1, name: "Classic Tee", price: 4500, image: "images/tee.jpg" },
-        { id: 2, name: "Denim Jacket", price: 12000, image: "images/jacket.jpg" },
-        { id: 3, name: "Leather Bag", price: 8500, image: "images/bag.jpg" },
-        { id: 4, name: "Sneakers", price: 10000, image: "images/sneakers.jpg" }
-      ];
+        {
+        id: 1,
+        name: "Classic Tee",
+        price: 4500,
+        image: "https://cdn.shopify.com/s/files/1/0552/4567/9833/products/classic-tee-white.jpg"
+      },
+      {
+        id: 2,
+        name: "Denim Jacket",
+        price: 12000,
+        image: "https://cdna.lystit.com/photos/nordstrom/beddc379/wrangler-Mid-Wash-Heritage-Pleated-Denim-Jacket.jpeg"
+      },
+      {
+        id: 3,
+        name: "Leather Bag",
+        price: 8500,
+        image: "https://vonbaer.com/cdn/shop/files/von-baer-womens-large-leather-tote-bag-brown-with-female-model_136ad17f-1ba1-4784-af45-46359b63d196.jpg"
+      },
+      {
+        id: 4,
+        name: "Sneakers",
+        price: 10000,
+        image: "https://gearmoose.com/wp-content/uploads/2017/04/best-all-white-sneakers-for-men.jpg"
+      }
+    ];
 
       const container = document.getElementById("product-list");
       products.forEach(product => {
@@ -223,3 +243,4 @@
   </script>
 </body>
 </html>
+
