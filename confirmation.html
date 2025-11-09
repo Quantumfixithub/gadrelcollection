@@ -7,35 +7,40 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Vertical Navigation -->
+  <nav class="vertical-nav">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li>
+        <a href="#">Shop</a>
+        <ul class="dropdown">
+          <li><a href="mens.html">Men</a></li>
+          <li><a href="womens.html">Women</a></li>
+          <li><a href="accessories.html">Accessories</a></li>
+        </ul>
+      </li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="checkout.html">Cart (<span id="cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
+
+  <!-- Page Header -->
   <header>
     <h1>Thank You for Your Order!</h1>
-   <nav class="vertical-nav">
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li>
-      <a href="#">Shop</a>
-      <ul class="dropdown">
-        <li><a href="mens.html">Men</a></li>
-        <li><a href="womens.html">Women</a></li>
-        <li><a href="accessories.html">Accessories</a></li>
-      </ul>
-    </li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-    <li><a href="checkout.html">Cart (<span id="cart-count">0</span>)</a></li>
-  </ul>
-</nav>
-
   </header>
 
+  <!-- Order Details -->
   <section>
     <ul id="order-details"></ul>
   </section>
 
+  <!-- Footer -->
   <footer>
     <p>&copy; 2025 Gadrel Collection</p>
   </footer>
 
+  <!-- Display Order Details -->
   <script>
     const order = JSON.parse(localStorage.getItem("lastOrder"));
     const list = document.getElementById("order-details");
@@ -46,8 +51,19 @@
         <li><strong>Amount:</strong> ₦${order.amount}</li>
         <li><strong>Reference:</strong> ${order.reference}</li>
       `;
+    } else {
+      list.innerHTML = "<li>No order found.</li>";
     }
+  </script>
+
+  <!-- Update Cart Count -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const cartCount = document.getElementById("cart-count");
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = totalItems;
+    });
   </script>
 </body>
 </html>
-
