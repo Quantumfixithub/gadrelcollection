@@ -1,51 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Accessories - Gadrel</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <!-- Vertical Navigation -->
-  <nav class="vertical-nav">
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li>
-        <a href="#">Shop</a>
-        <ul class="dropdown">
-          <li><a href="mens.html">Men</a></li>
-          <li><a href="womens.html">Women</a></li>
-          <li><a href="accessories.html">Accessories</a></li>
-        </ul>
-      </li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="checkout.html">Cart (<span id="cart-count">0</span>)</a></li>
-    </ul>
-  </nav>
-
-  <!-- Page Header -->
-  <header>
-    <h1>Accessories</h1>
-  </header>
-
-  <!-- Product Grid -->
-  <section class="product-grid" id="product-list">
-    <!-- Products will be loaded here -->
-  </section>
-
-  <!-- Load filtered products -->
-  <script src="category.js"></script>
-
-  <!-- Update cart count -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      const cartCount = document.getElementById("cart-count");
-      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-      cartCount.textContent = totalItems;
-    });
-  </script>
-</body>
-</html>
+[
+  {
+    "id": "mens-shirt",
+    "name": "Men's Shirt",
+    "category": "Clothing",
+    "gender": "Men",
+    "price": 8000,
+    "image": "https://i5.walmartimages.com/seo/GENTS-BLISS-Long-Sleeve-Mens-Dress-Shirts-Casual-Solid-Shirts-for-Men-Regular-Oxford-Tops-with-Pocket_4fff4355-09b7-4425-8638-1fea32177708.59a395eb56c500a6c61b6bac72f81bcd.jpeg",
+    "sale": false
+  },
+  {
+    "id": "womens-bag",
+    "name": "Women's Bag",
+    "category": "Bags",
+    "gender": "Women",
+    "price": 12000,
+    "image": "https://i5.walmartimages.com/asr/a3075ac0-fbad-4757-bde3-f593b8222583.43162b722ef99c6addcf8c46ca345d80.jpeg",
+    "sale": true
+  },
+  {
+    "id": "sneakers",
+    "name": "Sneakers",
+    "category": "Footwear",
+    "gender": "Unisex",
+    "price": 15000,
+    "image": "https://staticg.sportskeeda.com/editor/2022/08/0ce54-16607391770831-1920.jpg",
+    "sale": false
+  },
+  {
+    "id": "mens-jacket",
+    "name": "Men's Jacket",
+    "category": "Clothing",
+    "gender": "Men",
+    "price": 18000,
+    "image": "https://i5.walmartimages.com/asr/2eee434f-89cc-4c7e-9324-849dd8cfa45c.92c508323e1e751c4e5b7ef5080640bd.jpeg",
+    "sale": true
+  }
+]
