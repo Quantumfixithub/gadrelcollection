@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Register | Gadrel Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-dark: #442c27;
+      --gold: #e2be53;
+      --white: #ffffff;
+      --cream: #fff8e7;
+      --error: #e53935;
+      --success: #4CAF50;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #442c27 0%, #5a3a33 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      overflow-x: hidden;
+    }
+
+    .auth-container {
+      background: var(--white);
+      border-radius: 25px;
+      padding: 50px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      animation: slideUp 0.6s ease;
+      position: relative;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-shadow: 2px 2px 4px rgba(226, 190, 83, 0.2);
+    }
+
+    .subtitle {
+      color: var(--gold);
+      font-size: 1rem;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      background: #f5f5f5;
+      border-radius: 12px;
+      padding: 5px;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      color: #666;
+      user-select: none;
+    }
+
+    .tab:hover {
+      background: rgba(226, 190, 83, 0.1);
+    }
+
+    .tab.active {
+      background: var(--gold);
+      color: var(--primary-dark);
+      transform: scale(1.02);
+    }
+
+    .form-section {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .form-section.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--primary-dark);
+      font-size: 0.95rem;
+    }
+
+    .form-label i {
+      margin-right: 8px;
+      color: var(--gold);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: var(--white);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(226, 190, 83, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .form-input::placeholder {
+      color: #999;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #999;
+      transition: color 0.3s ease;
+      font-size: 1.1rem;
+    }
+
+    .toggle-password:hover {
+      color: var(--gold);
+    }
+
+    .btn-auth {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #e2be53, #d4a949);
+      color: var(--primary-dark);
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-auth:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(226, 190, 83, 0.4);
+    }
+
+    .btn-auth:active:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .btn-auth:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-auth i {
+      font-size: 1rem;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .back-link a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .back-link a:hover {
+      color: var(--primary-dark);
+      gap: 12px;
+    }
+
+    .alert {
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      display: none;
+      animation: slideDown 0.3s ease;
+      font-weight: 500;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .alert i {
+      margin-right: 10px;
+    }
+
+    .alert-error {
+      background: rgba(229, 57, 53, 0.1);
+      border: 2px solid rgba(229, 57, 53, 0.3);
+      color: var(--error);
+    }
+
+    .alert-success {
+      background: rgba(76, 175, 80, 0.1);
+      border: 2px solid rgba(76, 175, 80, 0.3);
+      color: var(--success);
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 20px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 3px solid rgba(68, 44, 39, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--primary-dark);
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Tablet Styles */
+    @media (max-width: 768px) {
+      body {
+        padding: 30px 15px;
+      }
+
+      .auth-container {
+        padding: 40px 30px;
+        border-radius: 20px;
+      }
+
+      .logo {
+        font-size: 2.5rem;
+        letter-spacing: 2px;
+      }
+
+      .subtitle {
+        font-size: 0.95rem;
+      }
+
+      .tab {
+        padding: 12px;
+        font-size: 0.95rem;
+      }
+
+      .form-input {
+        padding: 14px;
+        font-size: 0.95rem;
+      }
+
+      .btn-auth {
+        padding: 15px;
+        font-size: 1rem;
+      }
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 480px) {
+      body {
+        padding: 20px 10px;
+      }
+
+      .auth-container {
+        padding: 30px 20px;
+        border-radius: 18px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      .logo {
+        font-size: 2rem;
+        letter-spacing: 1.5px;
+      }
+
+      .subtitle {
+        font-size: 0.85rem;
+      }
+
+      .auth-header {
+        margin-bottom: 30px;
+      }
+
+      .tabs {
+        gap: 8px;
+        padding: 4px;
+      }
+
+      .tab {
+        padding: 12px 10px;
+        font-size: 0.9rem;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-label {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+      }
+
+      .form-input {
+        padding: 13px;
+        font-size: 0.9rem;
+        border-radius: 10px;
+      }
+
+      .btn-auth {
+        padding: 14px;
+        font-size: 0.95rem;
+        border-radius: 10px;
+      }
+
+      .alert {
+        padding: 12px;
+        font-size: 0.9rem;
+        border-radius: 10px;
+      }
+
+      .back-link {
+        margin-top: 20px;
+        font-size: 0.9rem;
+      }
+
+      .toggle-password {
+        right: 12px;
+        font-size: 1rem;
+      }
+    }
+
+    /* Extra Small Mobile */
+    @media (max-width: 360px) {
+      .auth-container {
+        padding: 25px 15px;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+      }
+
+      .tab {
+        padding: 10px 8px;
+        font-size: 0.85rem;
+      }
+
+      .form-input {
+        padding: 12px;
+        font-size: 0.85rem;
+      }
+
+      .btn-auth {
+        padding: 13px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-container">
+    <div class="auth-header">
+      <div class="logo">GADREL</div>
+      <p class="subtitle">Where Beauty Meets Fashion</p>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('login')">Login</div>
+      <div class="tab" onclick="switchTab('register')">Register</div>
+    </div>
+
+    <div class="alert alert-error" id="errorAlert"></div>
+    <div class="alert alert-success" id="successAlert"></div>
+
+    <!-- Login Form -->
+    <div id="loginForm" class="form-section active">
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-envelope"></i>Email Address
+          </label>
+          <input 
+            type="email" 
+            class="form-input" 
+            id="loginEmail" 
+            placeholder="Enter your email" 
+            required
+            autocomplete="email"
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-lock"></i>Password
+          </label>
+          <div class="password-wrapper">
+            <input 
+              type="password" 
+              class="form-input" 
+              id="loginPassword" 
+              placeholder="Enter your password" 
+              required
+              autocomplete="current-password"
+            >
+            <i class="fas fa-eye toggle-password" onclick="togglePassword('loginPassword', this)"></i>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-auth" id="loginBtn">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+
+        <div class="form-footer">
+          Don't have an account? <a href="#" onclick="switchTab('register'); return false;" style="color: var(--gold); text-decoration: none; font-weight: 600;">Sign up</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Register Form -->
+    <div id="registerForm" class="form-section">
+      <form onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-user"></i>Full Name
+          </label>
+          <input 
+            type="text" 
+            class="form-input" 
+            id="registerName" 
+            placeholder="Enter your full name" 
+            required
+            minlength="2"
+            autocomplete="name"
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-envelope"></i>Email Address
+          </label>
+          <input 
+            type="email" 
+            class="form-input" 
+            id="registerEmail" 
+            placeholder="Enter your email" 
+            required
+            autocomplete="email"
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-phone"></i>Phone Number
+          </label>
+          <input 
+            type="tel" 
+            class="form-input" 
+            id="registerPhone" 
+            placeholder="Enter your phone number             autocomplete="tel"
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-lock"></i>Password
+          </label>
+          <div class="password-wrapper">
+            <input 
+              type="password" 
+              class="form-input" 
+              id="registerPassword" 
+              placeholder="Create a password (min. 6 characters)" 
+              required 
+              minlength="6"
+              autocomplete="new-password"
+            >
+            <i class="fas fa-eye toggle-password" onclick="togglePassword('registerPassword', this)"></i>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-auth" id="registerBtn">
+          <i class="fas fa-user-plus"></i> Create Account
+        </button>
+
+        <div class="form-footer">
+          Already have an account? <a href="#" onclick="switchTab('login'); return false;" style="color: var(--gold); text-decoration: none; font-weight: 600;">Login</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="back-link">
+      <a href="index.html">
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Switch between login and register tabs
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.form-section').forEach(f => f.classList.remove('active'));
+      
+      if (tab === 'login') {
+        document.querySelectorAll('.tab')[0].classList.add('active');
+        document.getElementById('loginForm').classList.add('active');
+      } else {
+        document.querySelectorAll('.tab')[1].classList.add('active');
+        document.getElementById('registerForm').classList.add('active');
+      }
+
+      hideAlerts();
+      resetForms();
+    }
+
+    // Toggle password visibility
+    function togglePassword(inputId, icon) {
+      const input = document.getElementById(inputId);
+      
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+
+    // Hide all alerts
+    function hideAlerts() {
+      document.getElementById('errorAlert').style.display = 'none';
+      document.getElementById('successAlert').style.display = 'none';
+    }
+
+    // Show alert message
+    function showAlert(type, message) {
+      hideAlerts();
+      const alert = document.getElementById(type + 'Alert');
+      const icon = type === 'error' ? 'fa-exclamation-circle' : 'fa-check-circle';
+      alert.innerHTML = `<i class="fas ${icon}"></i>${message}`;
+      alert.style.display = 'block';
+
+      // Auto-hide success messages after 3 seconds
+      if (type === 'success') {
+        setTimeout(() => {
+          alert.style.display = 'none';
+        }, 3000);
+      }
+    }
+
+    // Reset all forms
+    function resetForms() {
+      document.getElementById('loginForm').querySelector('form').reset();
+      document.getElementById('registerForm').querySelector('form').reset();
+    }
+
+    // Validate email format
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    // Validate phone number (basic validation)
+    function isValidPhone(phone) {
+      if (!phone) return true; // Phone is optional
+      const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+      return phoneRegex.test(phone) && phone.replace(/\D/g, '').length >= 10;
+    }
+
+    // Handle login
+    function handleLogin(event) {
+      event.preventDefault();
+      
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const loginBtn = document.getElementById('loginBtn');
+
+      // Validate email format
+      if (!isValidEmail(email)) {
+        showAlert('error', 'Please enter a valid email address');
+        return;
+      }
+
+      // Disable button and show loading
+      loginBtn.disabled = true;
+      loginBtn.innerHTML = '<span class="loading-spinner"></span> Logging in...';
+
+      // Simulate network delay for better UX
+      setTimeout(() => {
+        const users = JSON.parse(localStorage.getItem('gadrelUsers')) || [];
+        const user = users.find(u => u.email === email && u.password === password);
+
+        if (user) {
+          // Check if admin trying to login from user login
+          if (user.isAdmin) {
+            showAlert('error', 'Admin users should login through admin portal');
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+            return;
+          }
+
+          localStorage.setItem('gadrelCurrentUser', JSON.stringify(user));
+          localStorage.setItem('gadrelLoggedIn', 'true');
+          
+          showAlert('success', 'Login successful! Redirecting...');
+          
+          setTimeout(() => {
+            window.location.href = 'account.html';
+          }, 1500);
+        } else {
+          showAlert('error', 'Invalid email or password. Please try again.');
+          loginBtn.disabled = false;
+          loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+        }
+      }, 800);
+    }
+
+    // Handle registration
+    function handleRegister(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById('registerName').value.trim();
+      const email = document.getElementById('registerEmail').value.trim();
+      const phone = document.getElementById('registerPhone').value.trim();
+      const password = document.getElementById('registerPassword').value;
+      const registerBtn = document.getElementById('registerBtn');
+
+      // Validate inputs
+      if (name.length < 2) {
+        showAlert('error', 'Name must be at least 2 characters long');
+        return;
+      }
+
+      if (!isValidEmail(email)) {
+        showAlert('error', 'Please enter a valid email address');
+        return;
+      }
+
+      if (phone && !isValidPhone(phone)) {
+        showAlert('error', 'Please enter a valid phone number');
+        return;
+      }
+
+      if (password.length < 6) {
+        showAlert('error', 'Password must be at least 6 characters long');
+        return;
+      }
+
+      // Disable button and show loading
+      registerBtn.disabled = true;
+      registerBtn.innerHTML = '<span class="loading-spinner"></span> Creating Account...';
+
+      // Simulate network delay for better UX
+      setTimeout(() => {
+        let users = JSON.parse(localStorage.getItem('gadrelUsers')) || [];
+        
+        // Check if email already exists
+        if (users.find(u => u.email === email)) {
+          showAlert('error', 'Email already registered. Please login instead.');
+          registerBtn.disabled = false;
+          registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+          return;
+        }
+
+        // Create new user
+        const newUser = {
+          id: Date.now(),
+          name: name,
+          email: email,
+          phone: phone || '',
+          password: password,
+          createdAt: new Date().toISOString(),
+          orderCount: 0,
+          isAdmin: false
+        };
+
+        users.push(newUser);
+        localStorage.setItem('gadrelUsers', JSON.stringify(users));
+
+        showAlert('success', 'Account created successfully! Switching to login...');
+        
+        // Reset form and switch to login tab after 2 seconds
+        setTimeout(() => {
+          switchTab('login');
+          document.getElementById('loginEmail').value = email;
+          document.getElementById('loginEmail').focus();
+          registerBtn.disabled = false;
+          registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+        }, 2000);
+      }, 1000);
+    }
+
+    // Check if already logged in
+    window.addEventListener('load', () => {
+      const currentUser = JSON.parse(localStorage.getItem('gadrelCurrentUser'));
+      
+      if (currentUser) {
+        if (currentUser.isAdmin) {
+          // Admin shouldn't access this page
+          window.location.href = 'admin-dashboard.html';
+        } else {
+          // Regular user already logged in
+          window.location.href = 'account.html';
+        }
+      }
+    });
+
+    // Handle enter key on inputs
+    document.querySelectorAll('.form-input').forEach(input => {
+      input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const form = input.closest('form');
+          if (form) {
+            form.querySelector('button[type="submit"]').click();
+          }
+        }
+      });
+    });
+
+    // Clear error messages when user starts typing
+    document.querySelectorAll('.form-input').forEach(input => {
+      input.addEventListener('input', () => {
+        const errorAlert = document.getElementById('errorAlert');
+        if (errorAlert.style.display === 'block') {
+          setTimeout(() => {
+            hideAlerts();
+          }, 300);
+        }
+      });
+    });
+
+    // Add real-time validation feedback
+    document.getElementById('registerPassword').addEventListener('input', function() {
+      if (this.value.length > 0 && this.value.length < 6) {
+        this.style.borderColor = '#ff9800';
+      } else if (this.value.length >= 6) {
+        this.style.borderColor = '#4CAF50';
+      } else {
+        this.style.borderColor = '#e0e0e0';
+      }
+    });
+
+    document.getElementById('registerEmail').addEventListener('input', function() {
+      if (this.value.length > 0) {
+        if (isValidEmail(this.value)) {
+          this.style.borderColor = '#4CAF50';
+        } else {
+          this.style.borderColor = '#ff9800';
+        }
+      } else {
+        this.style.borderColor = '#e0e0e0';
+      }
+    });
+
+    // Prevent form resubmission on page refresh
+    if (window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.href);
+    }
+  </script>
+
+</body>
+</html>

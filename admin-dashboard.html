@@ -1,0 +1,3088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Gadrel Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-dark: #442c27;
+      --gold: #e2be53;
+      --white: #ffffff;
+      --cream: #fff8e7;
+      --sidebar-bg: #2c1810;
+      --card-bg: #ffffff;
+      --border-color: #e0e0e0;
+      --success: #4CAF50;
+      --danger: #e53935;
+      --warning: #ff9800;
+      --info: #2196F3;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f5f5f5;
+      color: var(--primary-dark);
+    }
+
+    /* Mobile Menu Toggle */
+    .mobile-toggle {
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 2000;
+      background: var(--gold);
+      color: var(--primary-dark);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 280px;
+      height: 100vh;
+      background: var(--sidebar-bg);
+      padding: 30px 0;
+      overflow-y: auto;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-header {
+      text-align: center;
+      padding: 0 20px 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .admin-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--gold);
+      letter-spacing: 3px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .admin-subtitle {
+      color: var(--cream);
+      font-size: 0.9rem;
+    }
+
+    .admin-profile {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 20px;
+      margin: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+    }
+
+    .admin-avatar {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #e2be53, #d4a949);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--primary-dark);
+      flex-shrink: 0;
+    }
+
+    .admin-info h4 {
+      color: var(--white);
+      font-size: 1rem;
+      margin-bottom: 3px;
+    }
+
+    .admin-info p {
+      color: var(--cream);
+      font-size: 0.85rem;
+      word-break: break-word;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      padding: 20px 0;
+    }
+
+    .menu-item {
+      padding: 15px 30px;
+      color: var(--cream);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 1rem;
+      border-left: 3px solid transparent;
+    }
+
+    .menu-item:hover,
+    .menu-item.active {
+      background: rgba(226, 190, 83, 0.1);
+      color: var(--gold);
+      border-left-color: var(--gold);
+    }
+
+    .menu-item i {
+      width: 20px;
+      font-size: 1.2rem;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 280px;
+      padding: 30px;
+      min-height: 100vh;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      background: var(--white);
+      padding: 20px 30px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--primary-dark);
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #e2be53, #d4a949);
+      color: var(--primary-dark);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(226, 190, 83, 0.4);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: var(--white);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: var(--white);
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      color: var(--white);
+    }
+
+        /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stat-card {
+      background: var(--white);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-info h3 {
+      font-size: 2rem;
+      color: var(--primary-dark);
+      margin-bottom: 5px;
+    }
+
+    .stat-info p {
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    .stat-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+
+    .stat-icon.gold { background: linear-gradient(135deg, #e2be53, #d4a949); color: var(--primary-dark); }
+    .stat-icon.success { background: linear-gradient(135deg, #4CAF50, #45a049); color: white; }
+    .stat-icon.info { background: linear-gradient(135deg, #2196F3, #1976D2); color: white; }
+    .stat-icon.warning { background: linear-gradient(135deg, #ff9800, #f57c00); color: white; }
+
+    /* Content Sections */
+    .content-section {
+      display: none;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--primary-dark);
+    }
+
+    /* Table */
+    .table-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      background: var(--cream);
+      color: var(--primary-dark);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    tr:hover {
+      background: rgba(226, 190, 83, 0.05);
+    }
+
+    .product-img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .badge {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge-success { background: rgba(76, 175, 80, 0.1); color: var(--success); }
+    .badge-warning { background: rgba(255, 152, 0, 0.1); color: var(--warning); }
+    .badge-danger { background: rgba(229, 57, 53, 0.1); color: var(--danger); }
+    .badge-info { background: rgba(33, 150, 243, 0.1); color: var(--info); }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.3s;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: slideUp 0.3s;
+      margin: auto;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--primary-dark);
+    }
+
+    .close-modal {
+      font-size: 2rem;
+      color: #999;
+      cursor: pointer;
+      transition: color 0.3s;
+      background: none;
+      border: none;
+    }
+
+    .close-modal:hover {
+      color: var(--danger);
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--primary-dark);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid var(--border-color);
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(226, 190, 83, 0.1);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    select.form-control {
+      cursor: pointer;
+    }
+
+    /* Action Buttons */
+    .action-btns {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-sm {
+      padding: 8px 15px;
+      font-size: 0.85rem;
+    }
+
+    .btn-edit {
+      background: var(--info);
+      color: white;
+    }
+
+    .btn-delete {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-view {
+      background: var(--success);
+      color: white;
+    }
+
+    /* Alert */
+    .alert {
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .alert-success {
+      background: rgba(76, 175, 80, 0.1);
+      border: 2px solid rgba(76, 175, 80, 0.3);
+      color: var(--success);
+    }
+
+    .alert-error {
+      background: rgba(229, 57, 53, 0.1);
+      border: 2px solid rgba(229, 57, 53, 0.3);
+      color: var(--danger);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      color: #ddd;
+    }
+
+    .empty-state p {
+      font-size: 1.1rem;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 1024px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .mobile-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .sidebar.mobile-active {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 90px 15px 30px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .stat-card {
+        padding: 20px;
+      }
+
+      .stat-info h3 {
+        font-size: 1.5rem;
+      }
+
+      .stat-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+      }
+
+      .top-bar {
+        padding: 15px 20px;
+      }
+
+      .page-title {
+        font-size: 1.5rem;
+        width: 100%;
+      }
+
+      .top-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .card {
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .card-title {
+        font-size: 1.4rem;
+      }
+
+      .modal-content {
+        padding: 25px;
+      }
+
+      .modal-title {
+        font-size: 1.4rem;
+      }
+
+      table {
+        font-size: 0.9rem;
+      }
+
+      th, td {
+        padding: 10px;
+      }
+
+      .product-img {
+        width: 50px;
+        height: 50px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+
+      .admin-profile {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .action-btns {
+        flex-direction: column;
+      }
+
+      .action-btns .btn-sm {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-title {
+        font-size: 1.3rem;
+      }
+
+      .stat-info h3 {
+        font-size: 1.3rem;
+      }
+
+      .card-title {
+        font-size: 1.2rem;
+      }
+
+      table {
+        font-size: 0.85rem;
+      }
+
+      .product-img {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile Toggle -->
+  <button class="mobile-toggle" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="admin-logo">GADREL</div>
+      <p class="admin-subtitle">Admin Dashboard</p>
+    </div>
+
+    <div class="admin-profile">
+      <div class="admin-avatar">
+        <i class="fas fa-user-shield"></i>
+      </div>
+      <div class="admin-info">
+        <h4 id="adminName">Administrator</h4>
+        <p id="adminEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ea8b8e878384aa8d8b8e988f86898586868f899e838584c4898587">[email&#160;protected]</a></p>
+      </div>
+    </div>
+
+    <ul class="sidebar-menu">
+      <li class="menu-item active" onclick="showSection('dashboard')">
+        <i class="fas fa-chart-line"></i>
+        <span>Dashboard</span>
+      </li>
+      <li class="menu-item" onclick="showSection('products')">
+        <i class="fas fa-box"></i>
+        <span>Products</span>
+      </li>
+
+	
+      <li class="menu-item" onclick="showSection('orders')">
+        <i class="fas fa-shopping-bag"></i>
+        <span>Orders</span>
+      </li>
+      <li class="menu-item" onclick="showSection('users')">
+        <i class="fas fa-users"></i>
+        <span>Users</span>
+      </li>
+      <li class="menu-item" onclick="showSection('services')">
+        <i class="fas fa-concierge-bell"></i>
+        <span>Services</span>
+      </li>
+      <li class="menu-item" onclick="showSection('categories')">
+        <i class="fas fa-tags"></i>
+        <span>Categories</span>
+      </li>
+      <li class="menu-item" onclick="showSection('inventory')">
+        <i class="fas fa-boxes"></i>
+        <span>Inventory</span>
+      </li>
+      <li class="menu-item" onclick="showSection('adminUsers')">
+        <i class="fas fa-user-shield"></i>
+        <span>Admin Users</span>
+      </li>
+      <li class="menu-item" onclick="showSection('advertisements')">
+        <i class="fas fa-bullhorn"></i>
+        <span>Advertisements</span>
+      </li>
+      <li class="menu-item" onclick="showSection('messages')">
+        <i class="fas fa-envelope"></i>
+        <span>Messages</span>
+      </li>
+      <li class="menu-item" onclick="showSection('settings')">
+        <i class="fas fa-cog"></i>
+        <span>Settings</span>
+      </li>
+      <li class="menu-item" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    
+    <!-- Dashboard Section -->
+    <div id="dashboard" class="content-section active">
+      <div class="top-bar">
+        <h1 class="page-title">Dashboard Overview</h1>
+        <div class="top-actions">
+          <span id="currentDate"></span>
+        </div>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-info">
+            <h3 id="totalProducts">0</h3>
+            <p>Total Products</p>
+          </div>
+          <div class="stat-icon gold">
+            <i class="fas fa-box"></i>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <h3 id="totalOrders">0</h3>
+            <p>Total Orders</p>
+          </div>
+          <div class="stat-icon success">
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <h3 id="totalUsers">0</h3>
+            <p>Total Users</p>
+          </div>
+          <div class="stat-icon info">
+            <i class="fas fa-users"></i>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <h3 id="totalRevenue">₦0</h3>
+            <p>Total Revenue</p>
+          </div>
+          <div class="stat-icon warning">
+            <i class="fas fa-naira-sign"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Recent Orders</h2>
+        </div>
+        <div class="table-responsive">
+          <table id="recentOrdersTable">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="recentOrdersBody">
+              <tr>
+                <td colspan="5" class="empty-state">
+                  <div>
+                    <i class="fas fa-shopping-bag"></i>
+                    <p>No orders yet</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Products Section -->
+    <div id="products" class="content-section">
+      <div class="top-bar">
+        <h1 class="page-title">Products Management</h1>
+        <div class="top-actions">
+          <button class="btn btn-primary" onclick="openProductModal()">
+            <i class="fas fa-plus"></i> Add Product
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="productsTableBody">
+              <tr>
+                <td colspan="7" class="empty-state">
+                  <div>
+                    <i class="fas fa-box-open"></i>
+                    <p>No products found. Add your first product!</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Orders Section -->
+    <div id="orders" class="content-section">
+      <div class="top-bar">
+        <h1 class="page-title">Orders Management</h1>
+      </div>
+
+      <div class="card">
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTableBody">
+              <tr>
+                <td colspan="7" class="empty-state">
+                  <div>
+                    <i class="fas fa-shopping-bag"></i>
+                    <p>No orders found</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Users Section -->
+    <div id="users" class="content-section">
+      <div class="top-bar">
+        <h1 class="page-title">Users Management</h1>
+      </div>
+
+      <div class="card">
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Joined</th>
+                <th>Orders</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <tr>
+                <td colspan="6" class="empty-state">
+                  <div>
+                    <i class="fas fa-users"></i>
+                    <p>No users found</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Services Section -->
+    <div id="services" class="content-section">
+      <div class="top-bar">
+        <h1 class="page-title">Services Management</h1>
+        <div class="top-actions">
+          <button class="btn btn-primary" onclick="openServiceModal()">
+            <i class="fas fa-plus"></i> Add Service
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Service Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="servicesTableBody">
+              <tr>
+                <td colspan="5" class="empty-state">
+                  <div>
+                    <i class="fas fa-concierge-bell"></i>
+                    <p>No services found. Add your first service!</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Categories Section -->
+    <div id="categories" class="content-section">
+      <div class="top-bar">
+        <h1 class="page-title">Category Management</h1>
+        <div class="top-actions">
+          <button class="btn btn-primary" onclick="openCategoryModal()">
+            <i class="fas fa-plus"></i> Add Category
+          </button>
+        </div>
+      </div>
+
+      <div class="stats-grid" style="margin-bottom: 30px;">
+        <div class="stat-card">
+          <div class="stat-info">
+            <h3 id="totalCategories">0</h3>
+            <p>Total Categories</p>
+          </div>
+          <div class="stat-icon info">
+            <i class="fas fa-tags"></i>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <h3 id="categorizedProducts">0</h3>
+            <p>Categorized Products</p>
+          </div>
+          <div class="stat-icon success">
+            <i class="fas fa-box"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Category Name</th>
+                <th>Description</th>
+                <th>Products</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="categoriesTableBody">
+              <tr>
+                <td colspan="6" class="empty-state">
+                  <div>
+                    <i class="fas fa-tags"></i>
+                    <p>No categories found</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inventory Section -->
+    <div id="inventory" class="content-section">
+      <div class="top-bar">
+        <h1 class="page-title">Inventory Management</h1>
+        <div class="top-actions">
+          <button class="btn btn-primary" onclick="bulkRestock()">
+            <i class="fas fa-truck-loading"></i> Bulk Restock
+          </button>
+        </div>
+      </div>
+
+      <div class="stats-grid" style="margin-bottom: 30px;">
+        <div class="stat-card">
+          <div class="stat-info">
+            <h3 id="outOfStockCount">0</h3>
+            <p>Out of Stock</p>
+          </div>
+          <div class="stat-icon danger">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <h3 id="lowStockCount">0</h3>
+            <p>Low Stock (< 10)</p>
+          </div>
+          <div class="stat-icon warning">
+            <i class="fas fa-battery-quarter"></i>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <h3 id="inStockCount">0</h3>
+            <p>In Stock</p>
+          </div>
+          <div class="stat-icon success">
+            <i class="fas fa-check-circle"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="margin-bottom: 20px; padding: 20px;">
+          <select id="stockFilter" onchange="filterInventory()" class="form-control" style="max-width: 300px;">
+            <option value="all">All Products</option>
+            <option value="out">Out of Stock</option>
+            <option value="low">Low Stock</option>
+            <option value="in">In Stock</option>
+          </select>
+        </div>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Current Stock</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inventoryTableBody">
+              <tr>
+                <td colspan="6" class="empty-state">
+                  <div>
+                    <i class="fas fa-boxes"></i>
+                    <p>No products found</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Users Section -->
+    <div id="adminUsers" class="content-section">
+      <div class="top-bar">
+        <h1 class="page-title">Admin User Management</h1>
+        <div class="top-actions">
+          <button class="btn btn-primary" onclick="openAdminUserModal()">
+            <i class="fas fa-user-plus"></i> Add Admin User
+          </button>
+        </div>
+      </div>
+
+      <div class="stats-grid" style="margin-bottom: 30px;">
+        <div class="stat-card">
+          <div class="stat-info">
+            <h3 id="totalAdmins">0</h3>
+            <p>Total Admins</p>
+          </div>
+          <div class="stat-icon info">
+            <i class="fas fa-users-cog"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Created</th>
+                <th>Last Login</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminUsersTableBody">
+              <tr>
+                <td colspan="6" class="empty-state">
+                  <div>
+                    <i class="fas fa-user-shield"></i>
+                    <p>No admin users found</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Advertisements Section -->
+    <div id="advertisements" class="content-section">
+      <div class="top-bar">
+        <h1 class="page-title">Advertisement Management</h1>
+        <div class="top-actions">
+          <button class="btn btn-primary" onclick="openAdvertisementModal()">
+            <i class="fas fa-plus"></i> Add Advertisement
+          </button>
+        </div>
+      </div>
+
+      <div class="stats-grid" style="margin-bottom: 30px;">
+        <div class="stat-card">
+          <div class="stat-info">
+            <h3 id="totalAds">0</h3>
+            <p>Total Advertisements</p>
+          </div>
+          <div class="stat-icon warning">
+            <i class="fas fa-bullhorn"></i>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <h3 id="activeAds">0</h3>
+            <p>Active Advertisements</p>
+          </div>
+          <div class="stat-icon success">
+            <i class="fas fa-check-circle"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Preview</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="advertisementsTableBody">
+              <tr>
+                <td colspan="6" class="empty-state">
+                  <div>
+                    <i class="fas fa-bullhorn"></i>
+                    <p>No advertisements found. Create your first ad!</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Messages Section -->
+    <div id="messages" class="content-section">
+      <div class="top-bar">
+        <h1 class="page-title">Customer Messages</h1>
+      </div>
+
+      <div class="card">
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Subject</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="messagesTableBody">
+              <tr>
+                <td colspan="6" class="empty-state">
+                  <div>
+                    <i class="fas fa-envelope-open"></i>
+                    <p>No messages found</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Section -->
+    <div id="settings" class="content-section">
+      <div class="top-bar">
+        <h1 class="page-title">Settings</h1>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Website Settings</h2>
+        </div>
+        
+        <form id="settingsForm" onsubmit="saveSettings(event)">
+          <div class="form-group">
+            <label class="form-label">Website Name</label>
+            <input type="text" class="form-control" id="websiteName" value="Gadrel Collection">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Contact Email</label>
+            <input type="email" class="form-control" id="contactEmail" value="info@gadrelcollection.com">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Contact Phone</label>
+            <input type="tel" class="form-control" id="contactPhone" value="+234 XXX XXX XXXX">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Address</label>
+            <textarea class="form-control" id="address">Gadrel Collection Store, Abuja, FCT, Nigeria</textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Currency</label>
+            <select class="form-control" id="currency">
+              <option value="NGN">Nigerian Naira (₦)</option>
+              <option value="USD">US Dollar ($)</option>
+              <option value="EUR">Euro (€)</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> Save Settings
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Product Modal -->
+  <div id="productModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="productModalTitle">Add New Product</h2>
+        <button class="close-modal" onclick="closeProductModal()">&times;</button>
+      </div>
+      
+      <form id="productForm" onsubmit="saveProduct(event)">
+        <input type="hidden" id="productId">
+        
+        <div class="form-group">
+          <label class="form-label">Product Name</label>
+          <input type="text" class="form-control" id="productName" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-control" id="productCategory" required>
+            <option value="">Select Category</option>
+            <option value="Wigs">Wigs</option>
+            <option value="Bags">Bags</option>
+            <option value="Shoes">Shoes</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Clothing">Clothing</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Price (₦)</label>
+          <input type="number" class="form-control" id="productPrice" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Stock Quantity</label>
+          <input type="number" class="form-control" id="productStock" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Product Image <span style="color: red;">*</span></label>
+          <input type="file" class="form-control" id="productImageFile" accept="image/*" onchange="previewProductImage(this)" style="padding: 8px;">
+          <small style="display: block; margin-top: 5px; color: #666;">
+            Max size: 2MB. Supported: JPG, PNG, GIF, WebP
+          </small>
+          <div id="productImagePreview" style="margin-top: 15px;"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" id="productDescription"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-control" id="productStatus">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button type="submit" class="btn btn-primary" style="flex: 1;">
+            <i class="fas fa-save"></i> Save Product
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="closeProductModal()" style="flex: 1;">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Service Modal -->
+  <div id="serviceModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Add New Service</h2>
+        <button class="close-modal" onclick="closeServiceModal()">&times;</button>
+      </div>
+      
+      <form id="serviceForm" onsubmit="saveService(event)">
+        <input type="hidden" id="serviceId">
+        
+        <div class="form-group">
+          <label class="form-label">Service Name</label>
+          <input type="text" class="form-control" id="serviceName" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" id="serviceDescription" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Price (₦)</label>
+          <input type="number" class="form-control" id="servicePrice" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-control" id="serviceStatus">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button type="submit" class="btn btn-primary" style="flex: 1;">
+            <i class="fas fa-save"></i> Save Service
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="closeServiceModal()" style="flex: 1;">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Order Details Modal -->
+  <div id="orderModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Order Details</h2>
+        <button class="close-modal" onclick="closeOrderModal()">&times;</button>
+      </div>
+      
+      <div id="orderDetailsContent"></div>
+    </div>
+  </div>
+
+  <!-- Message Details Modal -->
+  <div id="messageModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Message Details</h2>
+        <button class="close-modal" onclick="closeMessageModal()">&times;</button>
+      </div>
+      
+      <div id="messageDetailsContent"></div>
+    </div>
+  <!-- Advertisement Modal -->
+  <div id="advertisementModal" class="modal">
+    <div class="modal-content" style="max-width: 600px;">
+      <div class="modal-header">
+        <h2 class="modal-title" id="advertisementModalTitle">Add Advertisement</h2>
+        <button class="close-modal" onclick="closeAdvertisementModal()">&times;</button>
+      </div>
+      
+      <form id="advertisementForm" onsubmit="saveAdvertisement(event)">
+        <input type="hidden" id="advertisementId">
+        
+        <div class="form-group">
+          <label class="form-label">Advertisement Title <span style="color: red;">*</span></label>
+          <input type="text" class="form-control" id="adTitle" required placeholder="e.g., Special Offer!">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description <span style="color: red;">*</span></label>
+          <textarea class="form-control" id="adDescription" rows="3" required placeholder="Enter advertisement description"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Button Text</label>
+          <input type="text" class="form-control" id="adButtonText" placeholder="e.g., Shop Now">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Button Link</label>
+          <input type="text" class="form-control" id="adButtonLink" placeholder="e.g., shop.html">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Background Color</label>
+          <input type="color" class="form-control" id="adBackgroundColor" value="#442c27">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Text Color</label>
+          <input type="color" class="form-control" id="adTextColor" value="#ffffff">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Background Image (Optional)</label>
+          <input type="file" class="form-control" id="adImage" accept="image/*" onchange="previewAdImage(this)" style="padding: 8px;">
+          <div id="adImagePreview" style="margin-top: 10px; max-width: 200px;"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-control" id="adStatus">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button type="submit" class="btn btn-primary" style="flex: 1;">
+            <i class="fas fa-save"></i> Save Advertisement
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="closeAdvertisementModal()" style="flex: 1;">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  </div>
+
+  <!-- Category Modal -->
+  <div id="categoryModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="categoryModalTitle">Add Category</h2>
+        <button class="close-modal" onclick="closeCategoryModal()">&times;</button>
+      </div>
+      
+      <form id="categoryForm" onsubmit="saveCategory(event)">
+        <input type="hidden" id="categoryId">
+        
+        <div class="form-group">
+          <label class="form-label">Category Name <span style="color: red;">*</span></label>
+          <input type="text" class="form-control" id="categoryName" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" id="categoryDescription" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-control" id="categoryStatus">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button type="submit" class="btn btn-primary" style="flex: 1;">
+            <i class="fas fa-save"></i> Save Category
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="closeCategoryModal()" style="flex: 1;">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Restock Modal -->
+  <div id="restockModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Restock Product</h2>
+        <button class="close-modal" onclick="closeRestockModal()">&times;</button>
+      </div>
+      
+      <form id="restockForm" onsubmit="performRestock(event)">
+        <input type="hidden" id="restockProductId">
+        
+        <div class="form-group">
+          <label class="form-label">Product</label>
+          <input type="text" class="form-control" id="restockProductName" readonly>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Current Stock</label>
+          <input type="number" class="form-control" id="restockCurrentStock" readonly>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Add Quantity <span style="color: red;">*</span></label>
+          <input type="number" class="form-control" id="restockQuantity" min="1" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">New Stock</label>
+          <input type="number" class="form-control" id="restockNewStock" readonly>
+        </div>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button type="submit" class="btn btn-primary" style="flex: 1;">
+            <i class="fas fa-check"></i> Confirm Restock
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="closeRestockModal()" style="flex: 1;">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin User Modal -->
+  <div id="adminUserModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Add Admin User</h2>
+        <button class="close-modal" onclick="closeAdminUserModal()">&times;</button>
+      </div>
+      
+      <form id="adminUserForm" onsubmit="saveAdminUser(event)">
+        <div class="form-group">
+          <label class="form-label">Full Name <span style="color: red;">*</span></label>
+          <input type="text" class="form-control" id="adminUserName" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email <span style="color: red;">*</span></label>
+          <input type="email" class="form-control" id="adminUserEmail" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password <span style="color: red;">*</span></label>
+          <input type="password" class="form-control" id="adminUserPassword" required minlength="6">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Role</label>
+          <select class="form-control" id="adminUserRole">
+            <option value="admin">Administrator</option>
+            <option value="super-admin">Super Administrator</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button type="submit" class="btn btn-primary" style="flex: 1;">
+            <i class="fas fa-user-plus"></i> Create Admin
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="closeAdminUserModal()" style="flex: 1;">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Initialize data structures
+    let products = JSON.parse(localStorage.getItem('gadrelProducts')) || [];
+    let orders = JSON.parse(localStorage.getItem('gadrelOrders')) || [];
+    let users = JSON.parse(localStorage.getItem('gadrelUsers')) || [];
+    let services = JSON.parse(localStorage.getItem('gadrelServices')) || [];
+    let messages = JSON.parse(localStorage.getItem('gadrelMessages')) || [];
+    let advertisements = JSON.parse(localStorage.getItem('gadrelAdvertisements')) || [];
+    let currentAdImage = null;
+    let currentProductImage = null;
+
+    
+    // New data structures
+    let categories = JSON.parse(localStorage.getItem('gadrelCategories')) || [
+      { id: 1, name: 'Wigs', description: 'Premium quality wigs', status: 'active', createdAt: new Date().toISOString() },
+      { id: 2, name: 'Bags', description: 'Fashion bags and accessories', status: 'active', createdAt: new Date().toISOString() },
+      { id: 3, name: 'Shoes', description: 'Stylish footwear', status: 'active', createdAt: new Date().toISOString() },
+      { id: 4, name: 'Accessories', description: 'Fashion accessories', status: 'active', createdAt: new Date().toISOString() },
+      { id: 5, name: 'Clothing', description: 'Trendy clothing', status: 'active', createdAt: new Date().toISOString() }
+    ];
+    let adminUsers = JSON.parse(localStorage.getItem('gadrelAdminUsers')) || [];
+
+
+    // IMAGE UPLOAD HANDLER
+    function handleImageUpload(file, callback) {
+      if (!file) {
+        callback(null);
+        return;
+      }
+
+      const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+      if (!validTypes.includes(file.type)) {
+        showAlert('error', 'Please upload a valid image file (JPG, PNG, GIF, or WebP)');
+        return;
+      }
+
+      const maxSize = 2 * 1024 * 1024; // 2MB
+      if (file.size > maxSize) {
+        showAlert('error', 'Image size must be less than 2MB. Please compress your image.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        callback(e.target.result);
+      };
+      reader.onerror = function() {
+        showAlert('error', 'Error reading file. Please try again.');
+        callback(null);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Preview product image
+    function previewProductImage(input) {
+      const preview = document.getElementById('productImagePreview');
+      const file = input.files[0];
+      
+      if (file) {
+        handleImageUpload(file, (base64) => {
+          if (base64) {
+            currentProductImage = base64;
+            preview.innerHTML = `
+              <div style="position: relative; display: inline-block;">
+                <img src="${base64}" style="max-width: 200px; max-height: 200px; border-radius: 10px; border: 2px solid #e0e0e0;">
+                <button type="button" onclick="removeProductImage()" style="position: absolute; top: -10px; right: -10px; background: red; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer;">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            `;
+          }
+        });
+      }
+    }
+
+    // Remove product image
+    function removeProductImage() {
+      currentProductImage = null;
+      document.getElementById('productImagePreview').innerHTML = '';
+      document.getElementById('productImageFile').value = '';
+    }
+
+    // Load categories for dropdown
+    function loadCategoriesForDropdown(selectElement) {
+      const categories = JSON.parse(localStorage.getItem('gadrelCategories')) || [];
+      const activeCategories = categories.filter(cat => cat.status === 'active');
+
+      if (selectElement) {
+        selectElement.innerHTML = '<option value="">Select Category</option>';
+        activeCategories.forEach(cat => {
+          const option = document.createElement('option');
+          option.value = cat.name;
+          option.textContent = cat.name;
+          selectElement.appendChild(option);
+        });
+      }
+    }
+
+    // Toggle mobile sidebar
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('mobile-active');
+    }
+
+    // Close sidebar when menu item clicked on mobile
+    function closeSidebarOnMobile() {
+      if (window.innerWidth <= 768) {
+        document.getElementById('sidebar').classList.remove('mobile-active');
+      }
+    }
+
+    // Check admin authentication
+    window.addEventListener('load', () => {
+      const currentUser = JSON.parse(localStorage.getItem('gadrelCurrentUser'));
+      if (!currentUser || !currentUser.isAdmin) {
+        window.location.href = 'admin-login.html';
+      } else {
+        document.getElementById('adminName').textContent = currentUser.name;
+        document.getElementById('adminEmail').textContent = currentUser.email;
+        initDashboard();
+      }
+    });
+
+    // Initialize Dashboard
+    function initDashboard() {
+      updateStats();
+      loadProducts();
+      loadOrders();
+      loadUsers();
+      loadServices();
+      loadMessages();
+      loadCategories();
+      loadInventory();
+      loadAdminUsers();
+      loadAdvertisements();
+      updateDateTime();
+      setInterval(updateDateTime, 1000);
+    }
+
+    // Update DateTime
+    function updateDateTime() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', options);
+    }
+
+    // Update Statistics
+    function updateStats() {
+      document.getElementById('totalProducts').textContent = products.length;
+      document.getElementById('totalOrders').textContent = orders.length;
+      document.getElementById('totalUsers').textContent = users.length;
+      
+      const revenue = orders.reduce((sum, order) => sum + (order.total || 0), 0);
+      document.getElementById('totalRevenue').textContent = '₦' + revenue.toLocaleString();
+      
+      loadRecentOrders();
+    }
+
+    // Load Recent Orders
+    function loadRecentOrders() {
+      const tbody = document.getElementById('recentOrdersBody');
+      const recentOrders = orders.slice(-5).reverse();
+      
+      if (recentOrders.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="empty-state">
+              <div>
+                <i class="fas fa-shopping-bag"></i>
+                <p>No orders yet</p>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = recentOrders.map(order => `
+        <tr>
+          <td>#${order.id}</td>
+          <td>${order.customerName}</td>
+          <td>${new Date(order.date).toLocaleDateString()}</td>
+          <td>₦${order.total.toLocaleString()}</td>
+          <td><span class="badge badge-${getStatusClass(order.status)}">${order.status}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    // Show Section
+    function showSection(sectionId) {
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(sectionId).classList.add('active');
+
+      document.querySelectorAll('.menu-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      event.target.closest('.menu-item').classList.add('active');
+
+      closeSidebarOnMobile();
+    }
+
+    // PRODUCTS MANAGEMENT
+    function loadProducts() {
+      const tbody = document.getElementById('productsTableBody');
+      
+      if (products.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" class="empty-state">
+              <div>
+                <i class="fas fa-box-open"></i>
+                <p>No products found. Add your first product!</p>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = products.map(product => `
+        <tr>
+          <td><img src="${product.image || 'https://via.placeholder.com/60'}" alt="${product.name}" class="product-img"></td>
+          <td>${product.name}</td>
+          <td>${product.category}</td>
+          <td>₦${product.price.toLocaleString()}</td>
+          <td>${product.stock}</td>
+          <td><span class="badge badge-${product.status === 'active' ? 'success' : 'danger'}">${product.status}</span></td>
+          <td>
+            <div class="action-btns">
+              <button class="btn btn-sm btn-edit" onclick="editProduct(${product.id})">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-sm btn-delete" onclick="deleteProduct(${product.id})">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openProductModal(productId = null) {
+      const modal = document.getElementById('productModal');
+      const form = document.getElementById('productForm');
+      const categorySelect = document.getElementById('productCategory');
+      const preview = document.getElementById('productImagePreview');
+      
+      // Load categories dynamically
+      loadCategoriesForDropdown(categorySelect);
+      
+      currentProductImage = null;
+      preview.innerHTML = '';
+      
+      if (productId) {
+        const product = products.find(p => p.id === productId);
+        document.getElementById('productModalTitle').textContent = 'Edit Product';
+        document.getElementById('productId').value = product.id;
+        document.getElementById('productName').value = product.name;
+        document.getElementById('productCategory').value = product.category;
+        document.getElementById('productPrice').value = product.price;
+        document.getElementById('productStock').value = product.stock;
+        document.getElementById('productDescription').value = product.description;
+        document.getElementById('productStatus').value = product.status;
+        
+        if (product.image) {
+          currentProductImage = product.image;
+          preview.innerHTML = `
+            <div style="position: relative; display: inline-block;">
+              <img src="${product.image}" style="max-width: 200px; max-height: 200px; border-radius: 10px; border: 2px solid #e0e0e0;">
+              <button type="button" onclick="removeProductImage()" style="position: absolute; top: -10px; right: -10px; background: red; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer;">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          `;
+        }
+      } else {
+        document.getElementById('productModalTitle').textContent = 'Add New Product';
+        form.reset();
+        document.getElementById('productId').value = '';
+        loadCategoriesForDropdown(categorySelect);
+      }
+      
+      modal.classList.add('active');
+    }
+
+    function closeProductModal() {
+      document.getElementById('productModal').classList.remove('active');
+    }
+
+    function saveProduct(event) {
+      event.preventDefault();
+      
+      const productId = document.getElementById('productId').value;
+      
+      // Validate image upload
+      if (!currentProductImage) {
+        showAlert('error', 'Please upload a product image');
+        return;
+      }
+      
+      const productData = {
+        id: productId ? parseInt(productId) : Date.now(),
+        name: document.getElementById('productName').value,
+        category: document.getElementById('productCategory').value,
+        price: parseFloat(document.getElementById('productPrice').value),
+        stock: parseInt(document.getElementById('productStock').value),
+        image: currentProductImage,
+        description: document.getElementById('productDescription').value,
+        status: document.getElementById('productStatus').value,
+        createdAt: new Date().toISOString()
+      };
+
+      if (productId) {
+        const index = products.findIndex(p => p.id === parseInt(productId));
+        products[index] = { ...products[index], ...productData };
+      } else {
+        products.push(productData);
+      }
+
+      localStorage.setItem('gadrelProducts', JSON.stringify(products));
+      loadProducts();
+      updateStats();
+      closeProductModal();
+      
+      showAlert('success', 'Product saved successfully!');
+    }
+
+    function editProduct(id) {
+      openProductModal(id);
+    }
+
+    function deleteProduct(id) {
+      if (confirm('Are you sure you want to delete this product?')) {
+        products = products.filter(p => p.id !== id);
+        localStorage.setItem('gadrelProducts', JSON.stringify(products));
+        loadProducts();
+        updateStats();
+        showAlert('success', 'Product deleted successfully!');
+      }
+    }
+
+    // ORDERS MANAGEMENT
+    function loadOrders() {
+      const tbody = document.getElementById('ordersTableBody');
+      
+      if (orders.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" class="empty-state">
+              <div>
+                <i class="fas fa-shopping-bag"></i>
+                <p>No orders found</p>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = orders.map(order => `
+        <tr>
+          <td>#${order.id}</td>
+          <td>${order.customerName}</td>
+          <td>${new Date(order.date).toLocaleDateString()}</td>
+          <td>${order.items} items</td>
+          <td>₦${order.total.toLocaleString()}</td>
+          <td><span class="badge badge-${getStatusClass(order.status)}">${order.status}</span></td>
+          <td>
+            <div class="action-btns">
+              <button class="btn btn-sm btn-view" onclick="viewOrder(${order.id})">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="btn btn-sm btn-delete" onclick="deleteOrder(${order.id})">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function viewOrder(id) {
+      const order = orders.find(o => o.id === id);
+      const content = document.getElementById('orderDetailsContent');
+      
+      content.innerHTML = `
+        <div style="margin-bottom: 20px;">
+          <p><strong>Order ID:</strong> #${order.id}</p>
+          <p><strong>Customer:</strong> ${order.customerName}</p>
+          <p><strong>Email:</strong> ${order.customerEmail || 'N/A'}</p>
+          <p><strong>Date:</strong> ${new Date(order.date).toLocaleString()}</p>
+          <p><strong>Status:</strong> <span class="badge badge-${getStatusClass(order.status)}">${order.status}</span></p>
+          <p><strong>Total Amount:</strong> ₦${order.total.toLocaleString()}</p>
+        </div>
+        
+        <div style="margin-top: 20px;">
+          <label class="form-label">Update Order Status:</label>
+          <select class="form-control" onchange="updateOrderStatus(${order.id}, this.value)">
+            <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
+            <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>Processing</option>
+            <option value="shipped" ${order.status === 'shipped' ? 'selected' : ''}>Shipped</option>
+            <option value="delivered" ${order.status === 'delivered' ? 'selected' : ''}>Delivered</option>
+            <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+          </select>
+        </div>
+      `;
+      
+      document.getElementById('orderModal').classList.add('active');
+    }
+
+    function updateOrderStatus(orderId, newStatus) {
+      const order = orders.find(o => o.id === orderId);
+      order.status = newStatus;
+      localStorage.setItem('gadrelOrders', JSON.stringify(orders));
+      loadOrders();
+      loadRecentOrders();
+      showAlert('success', 'Order status updated!');
+    }
+
+    function closeOrderModal() {
+      document.getElementById('orderModal').classList.remove('active');
+    }
+
+    function deleteOrder(id) {
+      if (confirm('Are you sure you want to delete this order?')) {
+        orders = orders.filter(o => o.id !== id);
+        localStorage.setItem('gadrelOrders', JSON.stringify(orders));
+        loadOrders();
+        updateStats();
+        showAlert('success', 'Order deleted successfully!');
+      }
+    }
+
+    // USERS MANAGEMENT
+    function loadUsers() {
+      const tbody = document.getElementById('usersTableBody');
+      
+      if (users.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="empty-state">
+              <div>
+                <i class="fas fa-users"></i>
+                <p>No users found</p>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = users.map(user => `
+        <tr>
+          <td>${user.name}</td>
+          <td>${user.email}</td>
+          <td>${user.phone || 'N/A'}</td>
+          <td>${new Date(user.createdAt).toLocaleDateString()}</td>
+          <td>${user.orderCount || 0}</td>
+          <td>
+            <div class="action-btns">
+              <button class="btn btn-sm btn-delete" onclick="deleteUser(${user.id})">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function deleteUser(id) {
+      if (confirm('Are you sure you want to delete this user?')) {
+        users = users.filter(u => u.id !== id);
+        localStorage.setItem('gadrelUsers', JSON.stringify(users));
+        loadUsers();
+        updateStats();
+        showAlert('success', 'User deleted successfully!');
+      }
+    }
+
+    // SERVICES MANAGEMENT
+    function loadServices() {
+      const tbody = document.getElementById('servicesTableBody');
+      
+      if (services.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="empty-state">
+              <div>
+                <i class="fas fa-concierge-bell"></i>
+                <p>No services found. Add your first service!</p>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = services.map(service => `
+        <tr>
+          <td>${service.name}</td>
+          <td>${service.description.substring(0, 50)}...</td>
+          <td>₦${service.price.toLocaleString()}</td>
+          <td><span class="badge badge-${service.status === 'active' ? 'success' : 'danger'}">${service.status}</span></td>
+          <td>
+            <div class="action-btns">
+              <button class="btn btn-sm btn-edit" onclick="editService(${service.id})">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-sm btn-delete" onclick="deleteService(${service.id})">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openServiceModal(serviceId = null) {
+      const modal = document.getElementById('serviceModal');
+      const form = document.getElementById('serviceForm');
+      
+      if (serviceId) {
+        const service = services.find(s => s.id === serviceId);
+        document.getElementById('serviceId').value = service.id;
+        document.getElementById('serviceName').value = service.name;
+        document.getElementById('serviceDescription').value = service.description;
+        document.getElementById('servicePrice').value = service.price;
+        document.getElementById('serviceStatus').value = service.status;
+      } else {
+        form.reset();
+        document.getElementById('serviceId').value = '';
+      }
+      
+      modal.classList.add('active');
+    }
+
+    function closeServiceModal() {
+      document.getElementById('serviceModal').classList.remove('active');
+    }
+
+    function saveService(event) {
+      event.preventDefault();
+      
+      const serviceId = document.getElementById('serviceId').value;
+      const serviceData = {
+        id: serviceId ? parseInt(serviceId) : Date.now(),
+        name: document.getElementById('serviceName').value,
+        description: document.getElementById('serviceDescription').value,
+        price: parseFloat(document.getElementById('servicePrice').value),
+        status: document.getElementById('serviceStatus').value,
+        createdAt: new Date().toISOString()
+      };
+
+      if (serviceId) {
+        const index = services.findIndex(s => s.id === parseInt(serviceId));
+        services[index] = { ...services[index], ...serviceData };
+      } else {
+        services.push(serviceData);
+      }
+
+      localStorage.setItem('gadrelServices', JSON.stringify(services));
+      loadServices();
+      closeServiceModal();
+      
+      showAlert('success', 'Service saved successfully!');
+    }
+
+    function editService(id) {
+      openServiceModal(id);
+    }
+
+    function deleteService(id) {
+      if (confirm('Are you sure you want to delete this service?')) {
+        services = services.filter(s => s.id !== id);
+        localStorage.setItem('gadrelServices', JSON.stringify(services));
+        loadServices();
+        showAlert('success', 'Service deleted successfully!');
+      }
+    }
+
+    // MESSAGES MANAGEMENT
+    function loadMessages() {
+      const tbody = document.getElementById('messagesTableBody');
+      
+      if (messages.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="empty-state">
+              <div>
+                <i class="fas fa-envelope-open"></i>
+                <p>No messages found</p>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = messages.map(msg => `
+        <tr>
+          <td>${msg.name}</td>
+          <td>${msg.email}</td>
+          <td>${msg.subject}</td>
+          <td>${new Date(msg.date).toLocaleDateString()}</td>
+          <td><span class="badge badge-${msg.read ? 'success' : 'warning'}">${msg.read ? 'Read' : 'Unread'}</span></td>
+          <td>
+            <div class="action-btns">
+              <button class="btn btn-sm btn-view" onclick="viewMessage(${msg.id})">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="btn btn-sm btn-delete" onclick="deleteMessage(${msg.id})">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function viewMessage(id) {
+      const msg = messages.find(m => m.id === id);
+      const content = document.getElementById('messageDetailsContent');
+      
+      content.innerHTML = `
+        <div style="margin-bottom: 20px;">
+          <p><strong>From:</strong> ${msg.name}</p>
+          <p><strong>Email:</strong> ${msg.email}</p>
+          <p><strong>Phone:</strong> ${msg.phone || 'N/A'}</p>
+          <p><strong>Subject:</strong> ${msg.subject}</p>
+          <p><strong>Date:</strong> ${new Date(msg.date).toLocaleString()}</p>
+        </div>
+        
+        <div style="padding: 20px; background: #f9f9f9; border-radius: 10px;">
+          <p style="white-space: pre-wrap;">${msg.message}</p>
+        </div>
+      `;
+      
+      // Mark as read
+      msg.read = true;
+      localStorage.setItem('gadrelMessages', JSON.stringify(messages));
+      loadMessages();
+      
+      document.getElementById('messageModal').classList.add('active');
+    }
+
+    function closeMessageModal() {
+      document.getElementById('messageModal').classList.remove('active');
+    }
+
+    function deleteMessage(id) {
+      if (confirm('Are you sure you want to delete this message?')) {
+        messages = messages.filter(m => m.id !== id);
+        localStorage.setItem('gadrelMessages', JSON.stringify(messages));
+        loadMessages();
+        showAlert('success', 'Message deleted successfully!');
+      }
+    }
+
+    // SETTINGS
+    function saveSettings(event) {
+      event.preventDefault();
+      
+      const settings = {
+        websiteName: document.getElementById('websiteName').value,
+        contactEmail: document.getElementById('contactEmail').value,
+        contactPhone: document.getElementById('contactPhone').value,
+        address: document.getElementById('address').value,
+        currency: document.getElementById('currency').value
+      };
+      
+      localStorage.setItem('gadrelSettings', JSON.stringify(settings));
+      showAlert('success', 'Settings saved successfully!');
+    }
+
+    // CATEGORY MANAGEMENT
+    function loadCategories() {
+      const tbody = document.getElementById('categoriesTableBody');
+      const totalCategoriesEl = document.getElementById('totalCategories');
+      const categorizedProductsEl = document.getElementById('categorizedProducts');
+      
+      if (totalCategoriesEl) {
+        totalCategoriesEl.textContent = categories.length;
+      }
+      
+      if (categorizedProductsEl) {
+        categorizedProductsEl.textContent = products.length;
+      }
+
+      if (!tbody) return;
+
+      if (categories.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="empty-state">
+              <div>
+                <i class="fas fa-tags"></i>
+                <p>No categories found. Add your first category!</p>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = categories.map(category => {
+        const productCount = products.filter(p => p.category === category.name).length;
+        
+        return `
+          <tr>
+            <td><strong>${category.name}</strong></td>
+            <td>${category.description || 'N/A'}</td>
+            <td>${productCount} products</td>
+            <td><span class="badge badge-${category.status === 'active' ? 'success' : 'warning'}">${category.status}</span></td>
+            <td>${new Date(category.createdAt).toLocaleDateString()}</td>
+            <td>
+              <div class="action-btns">
+                <button class="btn btn-sm btn-edit" onclick="editCategory(${category.id})" title="Edit">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-sm btn-delete" onclick="deleteCategory(${category.id})" title="Delete">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      localStorage.setItem('gadrelCategories', JSON.stringify(categories));
+    }
+
+    function openCategoryModal(categoryId = null) {
+      const modal = document.getElementById('categoryModal');
+      const title = document.getElementById('categoryModalTitle');
+      const form = document.getElementById('categoryForm');
+      
+      if (categoryId) {
+        const category = categories.find(c => c.id === categoryId);
+        if (category) {
+          title.textContent = 'Edit Category';
+          document.getElementById('categoryId').value = category.id;
+          document.getElementById('categoryName').value = category.name;
+          document.getElementById('categoryDescription').value = category.description || '';
+          document.getElementById('categoryStatus').value = category.status;
+        }
+      } else {
+        title.textContent = 'Add Category';
+        form.reset();
+        document.getElementById('categoryId').value = '';
+      }
+      
+      modal.classList.add('active');
+    }
+
+    function closeCategoryModal() {
+      document.getElementById('categoryModal').classList.remove('active');
+    }
+
+    function saveCategory(event) {
+      event.preventDefault();
+      
+      const categoryId = document.getElementById('categoryId').value;
+      const categoryData = {
+        name: document.getElementById('categoryName').value.trim(),
+        description: document.getElementById('categoryDescription').value.trim(),
+        status: document.getElementById('categoryStatus').value
+      };
+
+      if (categoryId) {
+        // Update existing category
+        const index = categories.findIndex(c => c.id == categoryId);
+        if (index !== -1) {
+          categories[index] = { ...categories[index], ...categoryData };
+          showAlert('success', 'Category updated successfully!');
+        }
+      } else {
+        // Create new category
+        const newCategory = {
+          id: Date.now(),
+          ...categoryData,
+          createdAt: new Date().toISOString()
+        };
+        categories.push(newCategory);
+        showAlert('success', 'Category created successfully!');
+      }
+
+      localStorage.setItem('gadrelCategories', JSON.stringify(categories));
+      loadCategories();
+      
+      // Update product form category dropdown if open
+      const productModal = document.getElementById('productModal');
+      if (productModal && productModal.classList.contains('active')) {
+        const categorySelect = document.getElementById('productCategory');
+        const currentValue = categorySelect.value;
+        loadCategoriesForDropdown(categorySelect);
+        if (currentValue) categorySelect.value = currentValue;
+      }
+      closeCategoryModal();
+    }
+
+    function editCategory(id) {
+      openCategoryModal(id);
+    }
+
+    function deleteCategory(id) {
+      const category = categories.find(c => c.id === id);
+      const productCount = products.filter(p => p.category === category.name).length;
+      
+      if (productCount > 0) {
+        if (!confirm(`This category has ${productCount} products. Deleting it will affect these products. Continue?`)) {
+          return;
+        }
+      }
+
+      if (confirm('Are you sure you want to delete this category?')) {
+        categories = categories.filter(c => c.id !== id);
+        localStorage.setItem('gadrelCategories', JSON.stringify(categories));
+        loadCategories();
+        showAlert('success', 'Category deleted successfully!');
+      }
+    }
+
+    // INVENTORY MANAGEMENT
+    function loadInventory() {
+      updateInventoryStats();
+      filterInventory();
+    }
+
+    function updateInventoryStats() {
+      const outOfStock = products.filter(p => p.stock === 0).length;
+      const lowStock = products.filter(p => p.stock > 0 && p.stock < 10).length;
+      const inStock = products.filter(p => p.stock >= 10).length;
+
+      const outOfStockEl = document.getElementById('outOfStockCount');
+      const lowStockEl = document.getElementById('lowStockCount');
+      const inStockEl = document.getElementById('inStockCount');
+
+      if (outOfStockEl) outOfStockEl.textContent = outOfStock;
+      if (lowStockEl) lowStockEl.textContent = lowStock;
+      if (inStockEl) inStockEl.textContent = inStock;
+    }
+
+    function filterInventory() {
+      const filter = document.getElementById('stockFilter')?.value || 'all';
+      const tbody = document.getElementById('inventoryTableBody');
+      
+      if (!tbody) return;
+
+      let filteredProducts = products;
+
+      switch(filter) {
+        case 'out':
+          filteredProducts = products.filter(p => p.stock === 0);
+          break;
+        case 'low':
+          filteredProducts = products.filter(p => p.stock > 0 && p.stock < 10);
+          break;
+        case 'in':
+          filteredProducts = products.filter(p => p.stock >= 10);
+          break;
+      }
+
+      if (filteredProducts.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="empty-state">
+              <div>
+                <i class="fas fa-boxes"></i>
+                <p>No products found for this filter</p>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filteredProducts.map(product => {
+        let stockStatus = 'danger';
+        let stockText = 'Out of Stock';
+        
+        if (product.stock >= 10) {
+          stockStatus = 'success';
+          stockText = 'In Stock';
+        } else if (product.stock > 0) {
+          stockStatus = 'warning';
+          stockText = 'Low Stock';
+        }
+
+        return `
+          <tr>
+            <td><strong>${product.name}</strong></td>
+            <td>${product.category}</td>
+            <td><strong>${product.stock}</strong> units</td>
+            <td>₦${product.price.toLocaleString()}</td>
+            <td><span class="badge badge-${stockStatus}">${stockText}</span></td>
+            <td>
+              <div class="action-btns">
+                <button class="btn btn-sm btn-primary" onclick="openRestockModal(${product.id})" title="Restock">
+                  <i class="fas fa-plus"></i> Restock
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openRestockModal(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+
+      document.getElementById('restockProductId').value = product.id;
+      document.getElementById('restockProductName').value = product.name;
+      document.getElementById('restockCurrentStock').value = product.stock;
+      document.getElementById('restockQuantity').value = '';
+      document.getElementById('restockNewStock').value = product.stock;
+
+      // Add event listener to calculate new stock
+      const quantityInput = document.getElementById('restockQuantity');
+      quantityInput.oninput = () => {
+        const addQty = parseInt(quantityInput.value) || 0;
+        document.getElementById('restockNewStock').value = product.stock + addQty;
+      };
+
+      document.getElementById('restockModal').classList.add('active');
+    }
+
+    function closeRestockModal() {
+      document.getElementById('restockModal').classList.remove('active');
+    }
+
+    function performRestock(event) {
+      event.preventDefault();
+      
+      const productId = parseInt(document.getElementById('restockProductId').value);
+      const addQuantity = parseInt(document.getElementById('restockQuantity').value);
+      
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+
+      product.stock += addQuantity;
+      
+      localStorage.setItem('gadrelProducts', JSON.stringify(products));
+      
+      loadInventory();
+      loadProducts();
+      closeRestockModal();
+      
+      showAlert('success', `Successfully added ${addQuantity} units to ${product.name}`);
+    }
+
+    function bulkRestock() {
+      const lowStockProducts = products.filter(p => p.stock < 10);
+      
+      if (lowStockProducts.length === 0) {
+        showAlert('info', 'No products need restocking!');
+        return;
+      }
+
+      if (confirm(`Add 20 units to all ${lowStockProducts.length} low stock products?`)) {
+        lowStockProducts.forEach(product => {
+          product.stock += 20;
+        });
+        
+        localStorage.setItem('gadrelProducts', JSON.stringify(products));
+        loadInventory();
+        loadProducts();
+        showAlert('success', `Bulk restocked ${lowStockProducts.length} products!`);
+      }
+    }
+
+    // ADMIN USER MANAGEMENT
+    function loadAdminUsers() {
+      const tbody = document.getElementById('adminUsersTableBody');
+      const totalAdminsEl = document.getElementById('totalAdmins');
+      
+      if (totalAdminsEl) {
+        totalAdminsEl.textContent = adminUsers.length;
+      }
+
+      if (!tbody) return;
+
+      if (adminUsers.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="empty-state">
+              <div>
+                <i class="fas fa-user-shield"></i>
+                <p>No admin users found. Add your first admin!</p>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = adminUsers.map(admin => `
+        <tr>
+          <td><strong>${admin.name}</strong></td>
+          <td>${admin.email}</td>
+          <td><span class="badge badge-info">${admin.role === 'super-admin' ? 'Super Admin' : 'Admin'}</span></td>
+          <td>${new Date(admin.createdAt).toLocaleDateString()}</td>
+          <td>${admin.lastLogin ? new Date(admin.lastLogin).toLocaleDateString() : 'Never'}</td>
+          <td>
+            <div class="action-btns">
+              <button class="btn btn-sm btn-delete" onclick="deleteAdminUser(${admin.id})" title="Delete">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+
+      localStorage.setItem('gadrelAdminUsers', JSON.stringify(adminUsers));
+    }
+
+    function openAdminUserModal() {
+      document.getElementById('adminUserModal').classList.add('active');
+      document.querySelector('#adminUserForm').reset();
+    }
+
+    function closeAdminUserModal() {
+      document.getElementById('adminUserModal').classList.remove('active');
+    }
+
+    function saveAdminUser(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById('adminUserName').value.trim();
+      const email = document.getElementById('adminUserEmail').value.trim();
+      const password = document.getElementById('adminUserPassword').value;
+      const role = document.getElementById('adminUserRole').value;
+
+      // Check if email already exists
+      if (users.find(u => u.email === email) || adminUsers.find(a => a.email === email)) {
+        showAlert('error', 'Email already exists!');
+        return;
+      }
+
+      const newAdmin = {
+        id: Date.now(),
+        name,
+        email,
+        password,
+        role,
+        isAdmin: true,
+        createdAt: new Date().toISOString(),
+        lastLogin: null
+      };
+
+      // Add to both admin users and regular users
+      adminUsers.push(newAdmin);
+      users.push(newAdmin);
+
+      localStorage.setItem('gadrelAdminUsers', JSON.stringify(adminUsers));
+      localStorage.setItem('gadrelUsers', JSON.stringify(users));
+
+      loadAdminUsers();
+      loadAdvertisements();
+      closeAdminUserModal();
+      showAlert('success', 'Admin user created successfully!');
+    }
+
+    function deleteAdminUser(id) {
+      if (confirm('Are you sure you want to delete this admin user?')) {
+        adminUsers = adminUsers.filter(a => a.id !== id);
+        
+        // Also remove from users array
+        users = users.filter(u => u.id !== id);
+        
+        localStorage.setItem('gadrelAdminUsers', JSON.stringify(adminUsers));
+        localStorage.setItem('gadrelUsers', JSON.stringify(users));
+        
+        loadAdminUsers();
+      loadAdvertisements();
+        showAlert('success', 'Admin user deleted successfully!');
+      }
+    }
+
+
+    // ADVERTISEMENT MANAGEMENT
+    function loadAdvertisements() {
+      const tbody = document.getElementById('advertisementsTableBody');
+      const totalAdsEl = document.getElementById('totalAds');
+      const activeAdsEl = document.getElementById('activeAds');
+      
+      if (totalAdsEl) totalAdsEl.textContent = advertisements.length;
+      if (activeAdsEl) activeAdsEl.textContent = advertisements.filter(ad => ad.status === 'active').length;
+
+      if (!tbody) return;
+
+      if (advertisements.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="empty-state">
+              <div>
+                <i class="fas fa-bullhorn"></i>
+                <p>No advertisements found. Create your first ad!</p>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = advertisements.map(ad => `
+        <tr>
+          <td>
+            ${ad.image ? `<img src="${ad.image}" alt="${ad.title}" style="width: 80px; height: 50px; object-fit: cover; border-radius: 8px;">` : '<div style="width: 80px; height: 50px; background: #f0f0f0; border-radius: 8px; display: flex; align-items: center; justify-content: center;"><i class="fas fa-image" style="color: #ccc;"></i></div>'}
+          </td>
+          <td><strong>${ad.title}</strong></td>
+          <td>${ad.description.substring(0, 50)}${ad.description.length > 50 ? '...' : ''}</td>
+          <td><span class="badge badge-${ad.status === 'active' ? 'success' : 'warning'}">${ad.status}</span></td>
+          <td>${new Date(ad.createdAt).toLocaleDateString()}</td>
+          <td>
+            <div class="action-btns">
+              <button class="btn btn-sm btn-edit" onclick="editAdvertisement(${ad.id})">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-sm btn-delete" onclick="deleteAdvertisement(${ad.id})">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+
+      localStorage.setItem('gadrelAdvertisements', JSON.stringify(advertisements));
+    }
+
+    function previewAdImage(input) {
+      const preview = document.getElementById('adImagePreview');
+      const file = input.files[0];
+      
+      if (file) {
+        handleImageUpload(file, (base64) => {
+          if (base64) {
+            currentAdImage = base64;
+            preview.innerHTML = `<img src="${base64}" style="width: 100%; border-radius: 8px; border: 2px solid #e0e0e0;">`;
+          }
+        });
+      } else {
+        currentAdImage = null;
+        preview.innerHTML = '';
+      }
+    }
+
+    function openAdvertisementModal(adId = null) {
+      console.log('Opening advertisement modal, adId:', adId);
+      const modal = document.getElementById('advertisementModal');
+      const title = document.getElementById('advertisementModalTitle');
+      const form = document.getElementById('advertisementForm');
+      const preview = document.getElementById('adImagePreview');
+      
+      console.log('Modal element:', modal);
+      console.log('Title element:', title);
+      console.log('Form element:', form);
+      console.log('Preview element:', preview);
+      
+      if (!modal) {
+        console.error('Advertisement modal not found!');
+        alert('Error: Advertisement modal not found. Please refresh the page.');
+        return;
+      }
+      
+      currentAdImage = null;
+      if (preview) preview.innerHTML = '';
+      
+      if (adId) {
+        const ad = advertisements.find(a => a.id === adId);
+        if (ad) {
+          title.textContent = 'Edit Advertisement';
+          document.getElementById('advertisementId').value = ad.id;
+          document.getElementById('adTitle').value = ad.title;
+          document.getElementById('adDescription').value = ad.description;
+          document.getElementById('adButtonText').value = ad.buttonText || '';
+          document.getElementById('adButtonLink').value = ad.buttonLink || '';
+          document.getElementById('adBackgroundColor').value = ad.backgroundColor || '#442c27';
+          document.getElementById('adTextColor').value = ad.textColor || '#ffffff';
+          document.getElementById('adStatus').value = ad.status;
+          
+          if (ad.image) {
+            currentAdImage = ad.image;
+            if (preview) preview.innerHTML = `<img src="${ad.image}" style="width: 100%; border-radius: 8px; border: 2px solid #e0e0e0;">`;
+          }
+        }
+      } else {
+        if (title) title.textContent = 'Add Advertisement';
+        form.reset();
+        document.getElementById('advertisementId').value = '';
+        document.getElementById('adBackgroundColor').value = '#442c27';
+        document.getElementById('adTextColor').value = '#ffffff';
+      }
+      
+      console.log('Adding active class to modal');
+      modal.classList.add('active');
+      console.log('Modal classes:', modal.className);
+    }
+
+    function closeAdvertisementModal() {
+      document.getElementById('advertisementModal').classList.remove('active');
+      currentAdImage = null;
+    }
+
+    function saveAdvertisement(event) {
+      event.preventDefault();
+      console.log('Saving advertisement...');
+      
+      try {
+        const adId = document.getElementById('advertisementId').value;
+        const adData = {
+          title: document.getElementById('adTitle').value.trim(),
+          description: document.getElementById('adDescription').value.trim(),
+          buttonText: document.getElementById('adButtonText').value.trim(),
+          buttonLink: document.getElementById('adButtonLink').value.trim(),
+          backgroundColor: document.getElementById('adBackgroundColor').value,
+          textColor: document.getElementById('adTextColor').value,
+          status: document.getElementById('adStatus').value,
+          image: currentAdImage
+        };
+
+        console.log('Advertisement data:', adData);
+
+        if (adId) {
+          // Update existing advertisement
+          const index = advertisements.findIndex(a => a.id == adId);
+          if (index !== -1) {
+            advertisements[index] = { ...advertisements[index], ...adData };
+            showAlert('success', 'Advertisement updated successfully!');
+            console.log('Advertisement updated');
+          }
+        } else {
+          // Create new advertisement
+          const newAd = {
+            id: Date.now(),
+            ...adData,
+            createdAt: new Date().toISOString()
+          };
+          advertisements.push(newAd);
+          console.log('New advertisement created:', newAd);
+          showAlert('success', 'Advertisement created successfully!');
+        }
+
+        localStorage.setItem('gadrelAdvertisements', JSON.stringify(advertisements));
+        console.log('Saved to localStorage');
+        loadAdvertisements();
+        closeAdvertisementModal();
+      } catch (error) {
+        console.error('Error saving advertisement:', error);
+        showAlert('error', 'Failed to save advertisement. Check console for details.');
+      }
+    }
+
+    function editAdvertisement(id) {
+      openAdvertisementModal(id);
+    }
+
+    function deleteAdvertisement(id) {
+      if (confirm('Are you sure you want to delete this advertisement?')) {
+        advertisements = advertisements.filter(a => a.id !== id);
+        localStorage.setItem('gadrelAdvertisements', JSON.stringify(advertisements));
+        loadAdvertisements();
+        showAlert('success', 'Advertisement deleted successfully!');
+      }
+    }
+
+    // UTILITY FUNCTIONS
+    function getStatusClass(status) {
+      const statusMap = {
+        'pending': 'warning',
+        'processing': 'info',
+        'shipped': 'info',
+        'delivered': 'success',
+        'cancelled': 'danger',
+        'completed': 'success'
+      };
+      return statusMap[status] || 'info';
+    }
+
+    function showAlert(type, message) {
+      const alert = document.createElement('div');
+      alert.className = `alert alert-${type}`;
+      alert.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}`;
+      alert.style.position = 'fixed';
+      alert.style.top = '20px';
+      alert.style.right = '20px';
+      alert.style.zIndex = '9999';
+      alert.style.minWidth = '300px';
+      alert.style.maxWidth = '90%';
+      
+      document.body.appendChild(alert);
+      
+      setTimeout(() => {
+        alert.remove();
+      }, 3000);
+    }
+
+    function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('gadrelCurrentUser');
+        localStorage.removeItem('gadrelLoggedIn');
+        window.location.href = 'admin-login.html';
+      }
+    }
+
+    // Initialize demo data if empty
+    if (products.length === 0) {
+      products = [
+        {
+          id: 1,
+          name: 'Premium Lace Front Wig',
+          category: 'Wigs',
+          price: 45000,
+          stock: 15,
+          image: 'https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=400',
+          description: 'High quality lace front wig',
+          status: 'active',
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: 2,
+          name: 'Luxury Handbag',
+          category: 'Bags',
+          price: 35000,
+          stock: 8,
+          image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400',
+          description: 'Designer luxury handbag',
+          status: 'active',
+          createdAt: new Date().toISOString()
+        }
+      ];
+      localStorage.setItem('gadrelProducts', JSON.stringify(products));
+    }
+
+    if (orders.length === 0) {
+      orders = [
+        {
+          id: 1001,
+          customerName: 'Jane Doe',
+          customerEmail: 'jane@example.com',
+            customerPhone: '+234 123 456 7890',
+          date: new Date().toISOString(),
+          items: 2,
+          total: 80000,
+          status: 'delivered'
+        },
+        {
+          id: 1002,
+          customerName: 'John Smith',
+          customerEmail: 'john@example.com',
+          customerPhone: '+234 987 654 3210',
+          date: new Date().toISOString(),
+          items: 1,
+          total: 45000,
+          status: 'pending'
+        }
+      ];
+      localStorage.setItem('gadrelOrders', JSON.stringify(orders));
+    }
+
+    // Save categories to localStorage
+    localStorage.setItem('gadrelCategories', JSON.stringify(categories));
+
+    // Modal click outside to close
+    document.querySelectorAll('.modal').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+        }
+      });
+    });
+
+    // Add CSS for alerts
+    const alertStyles = document.createElement('style');
+    alertStyles.textContent = `
+      .alert {
+        border-radius: 12px;
+        padding: 15px 20px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .alert-success {
+        background: linear-gradient(135deg, #4CAF50, #45a049);
+        color: white;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+      }
+      
+      .alert-error {
+        background: linear-gradient(135deg, #e74c3c, #c0392b);
+        color: white;
+        box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+      }
+      
+      .alert-info {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: white;
+        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+      }
+
+      .btn-sm {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+      }
+
+      .btn-edit {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: white;
+      }
+
+      .btn-view {
+        background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        color: white;
+      }
+
+      .btn-edit:hover,
+      .btn-view:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      }
+
+      .action-btns {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+      }
+    `;
+    document.head.appendChild(alertStyles);
+
+  </script>
+
+</body>
+</html>

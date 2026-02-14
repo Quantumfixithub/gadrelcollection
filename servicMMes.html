@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services | Gadrel Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-dark: #442c27;
+      --gold: #e2be53;
+      --white: #ffffff;
+      --cream: #fff8e7;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--primary-dark);
+      padding-top: 80px;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(68, 44, 39, 0.98);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(68, 44, 39, 0.15);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 3px;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 40px;
+    }
+
+    .nav-links a {
+      color: var(--cream);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--gold);
+    }
+
+    .nav-icons {
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-icon {
+      color: var(--cream);
+      font-size: 1.3rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-icon:hover {
+      color: var(--gold);
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--gold);
+      color: var(--primary-dark);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .page-hero {
+      background: linear-gradient(135deg, rgba(68, 44, 39, 0.95) 0%, rgba(90, 58, 51, 0.95) 100%),
+                  url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1600') center/cover;
+      padding: 100px 0;
+      text-align: center;
+      color: var(--white);
+    }
+
+    .page-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .page-hero p {
+      font-size: 1.3rem;
+      color: var(--cream);
+    }
+
+    .services-container {
+      max-width: 1200px;
+      margin: 80px auto;
+      padding: 0 50px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .service-icon {
+      background: linear-gradient(135deg, #e2be53, #d4a949);
+      padding: 40px;
+      text-align: center;
+    }
+
+    .service-icon i {
+      font-size: 4rem;
+      color: var(--primary-dark);
+    }
+
+    .service-content {
+      padding: 30px;
+    }
+
+    .service-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: var(--primary-dark);
+    }
+
+    .service-description {
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 20px;
+      font-size: 1.05rem;
+    }
+
+    .service-price {
+      font-size: 1.6rem;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .service-status {
+      display: inline-block;
+      padding: 6px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .status-active {
+      background: rgba(76, 175, 80, 0.1);
+      color: #4CAF50;
+    }
+
+    .status-inactive {
+      background: rgba(229, 57, 53, 0.1);
+      color: #e53935;
+    }
+
+    .btn-book {
+      width: 100%;
+      padding: 15px;
+      background: var(--primary-dark);
+      color: var(--white);
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1.05rem;
+    }
+
+    .btn-book:hover {
+      background: var(--gold);
+      color: var(--primary-dark);
+    }
+
+    .btn-book:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 100px 20px;
+      color: #999;
+    }
+
+    .empty-state i {
+      font-size: 5rem;
+      margin-bottom: 20px;
+      color: #ddd;
+    }
+
+    .empty-state p {
+      font-size: 1.3rem;
+    }
+
+    footer {
+      background: var(--primary-dark);
+      color: var(--cream);
+      padding: 40px 0 20px;
+      margin-top: 80px;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .page-hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .services-container {
+        padding: 0 20px;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <a href="index.html" class="logo">GADREL</a>
+      
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="services.html" class="active">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <div class="nav-icons">
+        <a href="account.html" class="nav-icon">
+          <i class="fas fa-user"></i>
+        </a>
+        <a href="cart.html" class="nav-icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="page-hero">
+    <h1>Our Services</h1>
+    <p>Premium beauty and fashion services tailored for you</p>
+  </section>
+
+  <div class="services-container">
+    <div class="services-grid" id="servicesGrid">
+      <div class="empty-state">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Loading services...</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Gadrel Collection. All Rights Reserved.</p>
+    <p>Designed with <i class="fas fa-heart" style="color: #e2be53;"></i> by Quantumfixithub</p>
+  </footer>
+
+  <script>
+    let services = JSON.parse(localStorage.getItem('gadrelServices')) || [];
+    let cart = JSON.parse(localStorage.getItem('gadrelCart')) || [];
+
+    window.addEventListener('load', () => {
+      updateCartCount();
+      displayServices();
+    });
+
+    function displayServices() {
+      const grid = document.getElementById('servicesGrid');
+      const activeServices = services.filter(s => s.status === 'active');
+
+      if (activeServices.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-concierge-bell"></i>
+            <p>No services available at the moment. Check back soon!</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = activeServices.map(service => `
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-spa"></i>
+          </div>
+          <div class="service-content">
+            <h3 class="service-name">${service.name}</h3>
+            <p class="service-description">${service.description}</p>
+            <div class="service-price">₦${service.price.toLocaleString()}</div>
+            <span class="service-status status-${service.status}">${service.status === 'active' ? 'Available' : 'Unavailable'}</span>
+            <button class="btn-book" onclick="bookService(${service.id})" ${service.status !== 'active' ? 'disabled' : ''}>
+              <i class="fas fa-calendar-check"></i> Book Service
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function bookService(serviceId) {
+      const currentUser = JSON.parse(localStorage.getItem('gadrelCurrentUser'));
+      
+      if (!currentUser) {
+        if (confirm('Please login to book a service. Go to login page?')) {
+          window.location.href = 'auth.html';
+        }
+        return;
+      }
+
+      const service = services.find(s => s.id === serviceId);
+      alert(`Service Booking Request\n\nService: ${service.name}\nPrice: ₦${service.price.toLocaleString()}\n\nWe will contact you shortly to confirm your appointment.`);
+    }
+
+    function updateCartCount() {
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById('cartCount').textContent = totalItems;
+    }
+  </script>
+
+</body>
+</html>
